@@ -1676,7 +1676,7 @@ strong.living-editable:focus {
 @media print {
   @page {
     size: A4 portrait;
-    margin: 8mm 10mm;
+    margin: 6mm 8mm;
   }
 
   *, *::before, *::after {
@@ -1690,8 +1690,8 @@ strong.living-editable:focus {
     color: var(--t-text, #2D2723) !important;
     margin: 0 !important;
     padding: 0 !important;
-    font-size: 13px !important;
-    line-height: 1.45 !important;
+    font-size: 12.5px !important;
+    line-height: 1.4 !important;
     -webkit-font-smoothing: antialiased !important;
   }
 
@@ -1730,105 +1730,48 @@ strong.living-editable:focus {
     overflow: visible !important;
   }
 
-  /* The Royal Photo-Frame Biodata Canvas */
+  /* The Royal Photo-Frame Biodata Canvas (Vector-Safe Inset Shadow Frame) */
   .template-classic {
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 auto !important;
-    padding: 24px 28px !important;
+    padding: 16px 22px !important;
     background: var(--t-bg, #FFFDF9) !important;
     color: var(--t-text, #2D2723) !important;
     border-radius: 6px !important;
-    /* Rich Photo-Frame Moulding Border in Print */
+    /* Clean vector-safe photo-frame border & inner gold fillet ring */
     border: 3.5px solid var(--t-border, #E8D8C3) !important;
-    box-shadow: 0 0 0 1.5px var(--t-accent, rgba(201, 151, 56, 0.45)) !important;
+    box-shadow: 
+      inset 0 0 0 1.5px var(--t-accent, #C99738),
+      inset 0 0 0 4.5px var(--t-bg, #FFFDF9),
+      inset 0 0 0 5.8px var(--t-inner-border, #E8D3B8) !important;
     position: relative !important;
     box-sizing: border-box !important;
+    -webkit-box-decoration-break: clone !important;
+    box-decoration-break: clone !important;
   }
 
-  /* Preserve Photo-Frame Double-Fillet Inset Line */
+  /* In print, hide absolute-positioned pseudo-elements that cause stray lines */
   .template-classic::before {
-    display: block !important;
-    content: "" !important;
-    position: absolute !important;
-    top: 8px !important;
-    left: 8px !important;
-    right: 8px !important;
-    bottom: 8px !important;
-    border: 1.2px solid var(--t-inner-border, #E8D3B8) !important;
-    outline: 1px solid var(--t-accent, rgba(201, 151, 56, 0.45)) !important;
-    outline-offset: -4px !important;
-    pointer-events: none !important;
-    border-radius: 4px !important;
+    display: none !important;
   }
 
-  /* Preserve 4 Royal Corner Ornaments */
   .t-frame-corners {
-    display: block !important;
-    position: absolute !important;
-    inset: 0 !important;
-    pointer-events: none !important;
+    display: none !important;
   }
-
-  .t-corner {
-    display: block !important;
-    position: absolute !important;
-    width: 20px !important;
-    height: 20px !important;
-    border-color: var(--t-accent, #C99738) !important;
-  }
-
-  .t-corner-tl {
-    top: 12px !important;
-    left: 12px !important;
-    border-top: 2px solid var(--t-accent, #C99738) !important;
-    border-left: 2px solid var(--t-accent, #C99738) !important;
-  }
-  .t-corner-tr {
-    top: 12px !important;
-    right: 12px !important;
-    border-top: 2px solid var(--t-accent, #C99738) !important;
-    border-right: 2px solid var(--t-accent, #C99738) !important;
-  }
-  .t-corner-bl {
-    bottom: 12px !important;
-    left: 12px !important;
-    border-bottom: 2px solid var(--t-accent, #C99738) !important;
-    border-left: 2px solid var(--t-accent, #C99738) !important;
-  }
-  .t-corner-br {
-    bottom: 12px !important;
-    right: 12px !important;
-    border-bottom: 2px solid var(--t-accent, #C99738) !important;
-    border-right: 2px solid var(--t-accent, #C99738) !important;
-  }
-
-  .t-corner::after {
-    display: block !important;
-    content: "" !important;
-    position: absolute !important;
-    width: 3.5px !important;
-    height: 3.5px !important;
-    background: var(--t-accent, #C99738) !important;
-    border-radius: 50% !important;
-  }
-  .t-corner-tl::after { top: 2px !important; left: 2px !important; }
-  .t-corner-tr::after { top: 2px !important; right: 2px !important; }
-  .t-corner-bl::after { bottom: 2px !important; left: 2px !important; }
-  .t-corner-br::after { bottom: 2px !important; right: 2px !important; }
 
   /* Top Bar */
   .t-paper-top-bar {
     display: flex !important;
     justify-content: center !important;
     border-bottom: 1px solid var(--t-accent, rgba(201, 151, 56, 0.3)) !important;
-    margin-bottom: 14px !important;
-    padding-bottom: 6px !important;
+    margin-bottom: 6px !important;
+    padding-bottom: 4px !important;
     width: 100% !important;
   }
   .t-paper-top-bar .t-classic-badge {
-    font-size: 0.8rem !important;
-    letter-spacing: 3px !important;
+    font-size: 0.72rem !important;
+    letter-spacing: 2.5px !important;
     margin: 0 !important;
   }
 
@@ -1837,7 +1780,7 @@ strong.living-editable:focus {
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    margin-bottom: 18px !important;
+    margin-bottom: 8px !important;
     position: relative !important;
   }
   .t-classic-shree::after {
@@ -1855,23 +1798,23 @@ strong.living-editable:focus {
     position: relative !important;
     z-index: 1 !important;
     background: var(--t-bg, #FFFDF9) !important;
-    padding: 0 18px !important;
+    padding: 0 16px !important;
   }
   .t-om {
-    font-size: 1.18rem !important;
-    letter-spacing: 2.5px !important;
+    font-size: 1.05rem !important;
+    letter-spacing: 2px !important;
     color: var(--t-primary, #7B113A) !important;
   }
 
   /* Candidate Portrait Frame */
   .t-classic-photo-wrap {
-    width: 120px !important;
-    height: 120px !important;
-    padding: 3.5px !important;
+    width: 95px !important;
+    height: 95px !important;
+    padding: 2.5px !important;
     background: linear-gradient(135deg, var(--t-accent, #C99738), var(--t-primary, #8B1E3F)) !important;
     box-shadow: 
       0 0 0 2px #FFFFFF,
-      0 0 0 4.5px var(--t-accent, #C99738) !important;
+      0 0 0 4px var(--t-accent, #C99738) !important;
     border-radius: 50% !important;
     display: inline-block !important;
     flex-shrink: 0 !important;
@@ -1887,36 +1830,36 @@ strong.living-editable:focus {
   .t-classic-hero {
     display: flex !important;
     align-items: center !important;
-    gap: 22px !important;
-    padding-bottom: 16px !important;
-    margin-bottom: 18px !important;
-    border-bottom: 1.5px solid var(--t-border, #EFE4D6) !important;
+    gap: 16px !important;
+    padding-bottom: 10px !important;
+    margin-bottom: 10px !important;
+    border-bottom: 1px solid var(--t-border, #EFE4D6) !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
   .t-classic-name {
-    font-size: 1.85rem !important;
+    font-size: 1.55rem !important;
     color: var(--t-primary, #7B113A) !important;
-    margin-bottom: 4px !important;
+    margin-bottom: 2px !important;
   }
   .t-classic-subtitle {
-    font-size: 0.95rem !important;
-    margin-bottom: 10px !important;
+    font-size: 0.88rem !important;
+    margin-bottom: 6px !important;
   }
 
   /* Chips & Tags */
   .t-chip {
-    padding: 4px 10px !important;
-    font-size: 0.78rem !important;
+    padding: 2.5px 8px !important;
+    font-size: 0.72rem !important;
     border: 1px solid var(--t-border, #F5DFBC) !important;
-    border-radius: 16px !important;
+    border-radius: 14px !important;
   }
 
   /* Section Headings */
   .t-classic-heading {
-    font-size: 1.08rem !important;
-    margin-bottom: 12px !important;
-    padding-bottom: 4px !important;
+    font-size: 0.95rem !important;
+    margin-bottom: 6px !important;
+    padding-bottom: 2px !important;
     border-bottom: 1px solid var(--t-border, #F0DFCC) !important;
     page-break-after: avoid !important;
     break-after: avoid !important;
@@ -1928,21 +1871,21 @@ strong.living-editable:focus {
   .t-classic-family-grid,
   .t-classic-horo-grid,
   .t-contact-box {
-    border-radius: 6px !important;
+    border-radius: 5px !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
 
   .t-classic-about {
-    padding: 12px 16px !important;
-    margin-bottom: 16px !important;
-    font-size: 0.88rem !important;
-    line-height: 1.5 !important;
+    padding: 6px 12px !important;
+    margin-bottom: 8px !important;
+    font-size: 0.82rem !important;
+    line-height: 1.4 !important;
   }
 
   .t-classic-section {
-    margin-bottom: 16px !important;
-    padding-bottom: 16px !important;
+    margin-bottom: 9px !important;
+    padding-bottom: 9px !important;
     border-bottom: 1px solid var(--t-border, #EFE4D6) !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
@@ -1951,28 +1894,38 @@ strong.living-editable:focus {
   .t-classic-grid-2 {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
-    gap: 16px !important;
+    gap: 12px !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
 
   .t-classic-table {
-    font-size: 0.84rem !important;
+    font-size: 0.78rem !important;
   }
   .t-classic-table td {
-    padding: 5px 8px !important;
+    padding: 3px 6px !important;
   }
   .t-classic-table tr {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
 
+  .t-classic-family-grid,
+  .t-classic-horo-grid {
+    padding: 6px 8px !important;
+    gap: 6px !important;
+  }
+
+  .t-contact-box {
+    padding: 6px 8px !important;
+  }
+
   .t-classic-footer {
-    padding-top: 14px !important;
-    margin-top: 14px !important;
+    padding-top: 8px !important;
+    margin-top: 8px !important;
     border-top: 1px solid var(--t-border, #DDD6CA) !important;
     text-align: center !important;
-    font-size: 0.78rem !important;
+    font-size: 0.72rem !important;
     page-break-before: avoid !important;
   }
 }

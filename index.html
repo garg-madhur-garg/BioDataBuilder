@@ -13,29 +13,41 @@
 <body>
 
   <div class="ambient-studio-wrapper">
-    <!-- 1. Whisper-Quiet Executive Topbar -->
+    <!-- 1. Futuristic Glassmorphic Studio Topbar -->
     <header class="editor-topbar">
-      <!-- Left: Brand & Status -->
+      <!-- Left: Brand & Live Status -->
       <div class="topbar-left">
-        <a href="index.html" class="topbar-brand">
-          <span class="topbar-brand-icon">💍</span>
-          <span class="topbar-brand-name">BiodataBuilder</span>
+        <a href="index.html" class="topbar-brand" title="BioDataBuilder Studio">
+          <div class="topbar-brand-icon-box">
+            <span class="topbar-brand-icon">💍</span>
+          </div>
+          <div class="topbar-brand-text-wrap">
+            <span class="topbar-brand-name">BiodataBuilder</span>
+            <span class="topbar-badge-ai">STUDIO 2.0</span>
+          </div>
         </a>
-        <div class="save-status-indicator" id="save-status-indicator">
+        <div class="save-status-indicator" id="save-status-indicator" title="Automatic Cloud & Local Sync">
           <span class="status-dot"></span>
           <span class="status-label">Saved</span>
         </div>
       </div>
 
-      <!-- Center: Clean Document Title -->
+      <!-- Center: Futuristic Floating Document Capsule (Dynamic Island) -->
       <div class="topbar-center">
-        <span class="document-name" id="doc-title-display">Marriage Biodata</span>
+        <div class="doc-capsule">
+          <span class="doc-capsule-icon">📄</span>
+          <span class="document-name" id="doc-title-display">Marriage Biodata</span>
+          <span class="doc-capsule-badge"><span class="doc-live-pulse"></span>LIVE</span>
+        </div>
       </div>
 
       <!-- Right: User Area -->
       <div class="topbar-right">
         <div id="topbar-user-area" class="user-profile-menu">
-          <button type="button" id="btn-open-auth-modal" class="btn-clean-ghost">☁️ Cloud Save</button>
+          <button type="button" id="btn-open-auth-modal" class="btn-clean-ghost">
+            <span class="ghost-icon">☁️</span>
+            <span>Cloud Save</span>
+          </button>
         </div>
       </div>
     </header>
