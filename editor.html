@@ -13,18 +13,13 @@
 <body>
 
   <div class="ambient-studio-wrapper">
-    <!-- 1. Futuristic Glassmorphic Studio Topbar -->
+    <!-- 1. Sleek Modern Studio Topbar -->
     <header class="editor-topbar">
       <!-- Left: Brand & Live Status -->
       <div class="topbar-left">
-        <a href="index.html" class="topbar-brand" title="BioDataBuilder Studio">
-          <div class="topbar-brand-icon-box">
-            <span class="topbar-brand-icon">💍</span>
-          </div>
-          <div class="topbar-brand-text-wrap">
-            <span class="topbar-brand-name">BiodataBuilder</span>
-            <span class="topbar-badge-ai">STUDIO 2.0</span>
-          </div>
+        <a href="index.html" class="topbar-brand" title="BioDataBuilder">
+          <span class="topbar-brand-icon">💍</span>
+          <span class="topbar-brand-name">BiodataBuilder</span>
         </a>
         <div class="save-status-indicator" id="save-status-indicator" title="Automatic Cloud & Local Sync">
           <span class="status-dot"></span>
@@ -32,13 +27,9 @@
         </div>
       </div>
 
-      <!-- Center: Futuristic Floating Document Capsule (Dynamic Island) -->
+      <!-- Center: Exactly Centered Document Title -->
       <div class="topbar-center">
-        <div class="doc-capsule">
-          <span class="doc-capsule-icon">📄</span>
-          <span class="document-name" id="doc-title-display">Marriage Biodata</span>
-          <span class="doc-capsule-badge"><span class="doc-live-pulse"></span>LIVE</span>
-        </div>
+        <span class="document-name" id="doc-title-display">Marriage Biodata</span>
       </div>
 
       <!-- Right: User Area -->
@@ -62,16 +53,8 @@
       </div>
     </main>
 
-    <!-- 3. Futuristic Floating Glass Dock (macOS / Dynamic Island Style) -->
+    <!-- 3. Minimal Floating Glass Dock -->
     <nav class="floating-glass-dock" id="floating-glass-dock" aria-label="Studio Quick Actions">
-      <!-- Open Structured Drawer -->
-      <button type="button" id="btn-toggle-drawer" class="dock-pill-btn dock-btn-primary" title="Open complete details editor">
-        <span class="dock-icon">✏️</span>
-        <span class="dock-label">Edit Form</span>
-      </button>
-
-      <div class="dock-divider"></div>
-
       <!-- Luxury Theme Selector Orbs -->
       <div class="dock-theme-selector" title="Choose luxury theme palette">
         <button type="button" class="theme-orb-btn active" data-theme="royal-maroon" title="Royal Maroon & Gold" style="--orb-color: #7B113A;"></button>
@@ -81,12 +64,6 @@
       </div>
 
       <div class="dock-divider"></div>
-
-      <!-- Sample Profile -->
-      <button type="button" id="btn-fill-sample" class="dock-pill-btn dock-btn-ghost" title="Auto-fill with sample biodata">
-        <span class="dock-icon">✨</span>
-        <span class="dock-label">Sample</span>
-      </button>
 
       <!-- Share Trigger -->
       <button type="button" id="btn-share-trigger" class="dock-pill-btn dock-btn-ghost" title="Share directly on WhatsApp or copy link">
