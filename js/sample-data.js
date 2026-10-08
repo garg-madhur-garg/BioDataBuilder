@@ -3,6 +3,7 @@ export const sampleBiodata = {
   slug: "rahul-sharma",
   status: "draft",
   template: "classic",
+  auspiciousMotto: "॥ श्री गणेशाय नमः ॥",
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
 

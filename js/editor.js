@@ -178,6 +178,23 @@ async function initEditor() {
   }
 
   function syncToDrawerInput(field, val) {
+    if (field === "auspiciousMotto") {
+      const drawerSelect = document.getElementById("select-auspicious-preset");
+      const drawerCustom = document.getElementById("field-auspiciousMotto");
+      if (drawerSelect && drawerCustom) {
+        const hasOpt = Array.from(drawerSelect.options).some(o => o.value === val);
+        if (hasOpt) {
+          drawerSelect.value = val;
+          drawerCustom.style.display = "none";
+          drawerCustom.value = val;
+        } else {
+          drawerSelect.value = "__custom__";
+          drawerCustom.style.display = "block";
+          drawerCustom.value = val;
+        }
+      }
+      return;
+    }
     const parts = field.split(".");
     const key = parts[parts.length - 1];
     const input = document.getElementById(`field-${key}`) || document.getElementById(`field-${key.charAt(0).toUpperCase() + key.slice(1)}`);
@@ -382,13 +399,31 @@ async function initEditor() {
       });
     });
 
+    // 10c. Auspicious Motto Preset Chips on Paper
+    livePreviewCanvas.querySelectorAll(".btn-shree-chip").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const motto = btn.dataset.motto;
+        biodata.auspiciousMotto = motto;
+        const customInp = livePreviewCanvas.querySelector("#field-custom-motto");
+        if (customInp) customInp.value = motto;
+        syncToDrawerInput("auspiciousMotto", motto);
+        updateLivePreview();
+        queueAutoSave();
+      });
+    });
+
     // 11. Direct Contenteditable Header In-Place Editing
     livePreviewCanvas.querySelectorAll(".living-editable").forEach((el) => {
       el.addEventListener("input", () => {
         const field = el.dataset.field;
         const text = el.innerText.trim();
 
-        if (field === "personal.fullName") {
+        if (field === "auspiciousMotto") {
+          biodata.auspiciousMotto = text;
+          syncToDrawerInput("auspiciousMotto", text);
+        } else if (field === "personal.fullName") {
           if (!biodata.personal) biodata.personal = {};
           biodata.personal.fullName = text;
           biodata.slug = slugify(text);
@@ -646,6 +681,23 @@ async function initEditor() {
       avatarPreviewImg.src = photos[0]?.src || "assets/images/profile.svg";
     }
 
+    // Auspicious Motto
+    const motto = data.auspiciousMotto !== undefined ? data.auspiciousMotto : "॥ श्री गणेशाय नमः ॥";
+    const drawerSelect = document.getElementById("select-auspicious-preset");
+    const drawerCustom = document.getElementById("field-auspiciousMotto");
+    if (drawerSelect && drawerCustom) {
+      const hasOpt = Array.from(drawerSelect.options).some(o => o.value === motto);
+      if (hasOpt) {
+        drawerSelect.value = motto;
+        drawerCustom.style.display = "none";
+        drawerCustom.value = motto;
+      } else {
+        drawerSelect.value = "__custom__";
+        drawerCustom.style.display = "block";
+        drawerCustom.value = motto;
+      }
+    }
+
     // Personal
     bindVal("field-fullName", p.fullName);
     bindVal("field-gender", p.gender);
@@ -742,6 +794,29 @@ async function initEditor() {
     if (!biodata.preferences) biodata.preferences = {};
 
     switch (id) {
+      case "select-auspicious-preset":
+        if (val === "__custom__") {
+          const customInp = document.getElementById("field-auspiciousMotto");
+          if (customInp) {
+            customInp.style.display = "block";
+            customInp.focus();
+          }
+        } else {
+          const customInp = document.getElementById("field-auspiciousMotto");
+          if (customInp) {
+            customInp.style.display = "none";
+            customInp.value = val;
+          }
+          biodata.auspiciousMotto = val;
+          updateLivePreview();
+          queueAutoSave();
+        }
+        break;
+      case "field-auspiciousMotto":
+        biodata.auspiciousMotto = val;
+        updateLivePreview();
+        queueAutoSave();
+        break;
       case "field-fullName":
         biodata.personal.fullName = val;
         biodata.slug = slugify(val);

@@ -82,9 +82,57 @@ export function renderClassicTemplate(data, options = { isPreview: false, editin
   return `
     <div class="template-classic theme-${activeTheme} ${isLive ? "is-preview living-document" : ""}" data-theme="${activeTheme}">
       <!-- Auspicious Header -->
-      <div class="t-classic-shree">
-        <span class="t-om">॥ श्री गणेशाय नमः ॥</span>
+      ${data.auspiciousMotto === "" && !isLive && !isEditing("shree") ? "" : `
+      <div class="t-classic-shree ${isEditing("shree") ? "is-section-editing" : ""}">
+        ${isEditing("shree") ? `
+          <div class="t-sec-header-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; width: 100%;">
+            <h3 class="t-classic-card-title" style="margin: 0;">
+              <span>Auspicious Motto / Blessing <em class="t-editing-pill">Editing</em></span>
+            </h3>
+            <div class="t-sec-actions">
+              <button type="button" class="section-done-btn" data-section="shree">✓ Done</button>
+            </div>
+          </div>
+
+          <div class="shree-preset-chips-container">
+            <span class="shree-preset-label">Quick Presets:</span>
+            <div class="shree-preset-chips">
+              <button type="button" class="btn-shree-chip" data-motto="॥ श्री गणेशाय नमः ॥">🕉️ श्री गणेशाय नमः</button>
+              <button type="button" class="btn-shree-chip" data-motto="॥ श्री कृष्णाय नमः ॥">🦚 श्री कृष्णाय नमः</button>
+              <button type="button" class="btn-shree-chip" data-motto="हरे कृष्ण">🌸 हरे कृष्ण (Hindi)</button>
+              <button type="button" class="btn-shree-chip" data-motto="Hare Krishna">🦚 Hare Krishna (English)</button>
+              <button type="button" class="btn-shree-chip" data-motto="॥ ॐ नमः शिवाय ॥">🔱 ॐ नमः शिवाय</button>
+              <button type="button" class="btn-shree-chip" data-motto="॥ जय श्री राम ॥">🏹 जय श्री राम</button>
+              <button type="button" class="btn-shree-chip" data-motto="॥ श्री राधारमणो विजयते ॥">🦚 श्री राधारमणो विजयते</button>
+              <button type="button" class="btn-shree-chip" data-motto="॥ जय माता दी ॥">🌺 जय माता दी</button>
+              <button type="button" class="btn-shree-chip" data-motto="॥ ੴ सतिगुर प्रसादि ॥">ੴ Ik Onkar</button>
+              <button type="button" class="btn-shree-chip" data-motto="॥ ॐ नमो जिनेश्वराय ॥">☸️ ॐ नमो जिनेश्वराय</button>
+              <button type="button" class="btn-shree-chip" data-motto="॥ ॐ ॥">🕉️ ॥ ॐ ॥</button>
+              <button type="button" class="btn-shree-chip btn-shree-none" data-motto="">🚫 None (Remove)</button>
+            </div>
+          </div>
+
+          <div style="margin-top: 14px; text-align: left;">
+            <label style="font-size: 0.78rem; font-weight: 600; color: #6E6357; display: block; margin-bottom: 5px;">Custom Blessing / Motto:</label>
+            <input type="text" class="inline-field-input" data-field="auspiciousMotto" id="field-custom-motto" placeholder="Type custom blessing (e.g. Hare Krishna, जय माता दी, राधे राधे)" value="${data.auspiciousMotto !== undefined ? data.auspiciousMotto : "॥ श्री गणेशाय नमः ॥"}" style="width: 100%;">
+          </div>
+        ` : `
+          ${data.auspiciousMotto !== "" ? `
+            <span class="t-om ${isLive ? "living-editable" : ""}" 
+                  ${isLive ? 'contenteditable="true" spellcheck="false" data-field="auspiciousMotto" title="Click to edit or choose blessing"' : ""}>
+              ${data.auspiciousMotto !== undefined ? data.auspiciousMotto : "॥ श्री गणेशाय नमः ॥"}
+            </span>
+          ` : (isLive ? `
+            <span class="t-om t-muted" style="font-style: italic; font-size: 0.84rem; opacity: 0.7;" title="Auspicious blessing is hidden">
+              [No Blessing Line]
+            </span>
+          ` : "")}
+          ${isLive ? `
+            <button type="button" class="btn-shree-inline-edit section-edit-trigger" data-section="shree" title="Choose or customize auspicious header">✎ Edit Blessing</button>
+          ` : ""}
+        `}
       </div>
+      `}
 
       <!-- Top Paper Bar with Master Edit Tag -->
       <div class="t-paper-top-bar">
