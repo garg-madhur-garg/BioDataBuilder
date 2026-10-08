@@ -97,16 +97,16 @@ export function renderClassicTemplate(data, options = { isPreview: false, editin
           <div class="shree-preset-chips-container">
             <span class="shree-preset-label">Quick Presets:</span>
             <div class="shree-preset-chips">
-              <button type="button" class="btn-shree-chip" data-motto="॥ श्री गणेशाय नमः ॥">🕉️ श्री गणेशाय नमः</button>
-              <button type="button" class="btn-shree-chip" data-motto="॥ श्री कृष्णाय नमः ॥">🦚 श्री कृष्णाय नमः</button>
-              <button type="button" class="btn-shree-chip" data-motto="हरे कृष्ण">🌸 हरे कृष्ण (Hindi)</button>
-              <button type="button" class="btn-shree-chip" data-motto="Hare Krishna">🦚 Hare Krishna (English)</button>
-              <button type="button" class="btn-shree-chip" data-motto="॥ ॐ नमः शिवाय ॥">🔱 ॐ नमः शिवाय</button>
-              <button type="button" class="btn-shree-chip" data-motto="॥ जय श्री राम ॥">🏹 जय श्री राम</button>
-              <button type="button" class="btn-shree-chip" data-motto="॥ श्री राधारमणो विजयते ॥">🦚 श्री राधारमणो विजयते</button>
-              <button type="button" class="btn-shree-chip" data-motto="॥ जय माता दी ॥">🌺 जय माता दी</button>
-              <button type="button" class="btn-shree-chip" data-motto="॥ ੴ सतिगुर प्रसादि ॥">ੴ Ik Onkar</button>
-              <button type="button" class="btn-shree-chip" data-motto="॥ ॐ नमो जिनेश्वराय ॥">☸️ ॐ नमो जिनेश्वराय</button>
+              <button type="button" class="btn-shree-chip" data-motto="॥ श्री गणेशाय नमः ॥">🕉️ ॥ श्री गणेशाय नमः ॥</button>
+              <button type="button" class="btn-shree-chip" data-motto="॥ श्री कृष्णाय नमः ॥">🦚 ॥ श्री कृष्णाय नमः ॥</button>
+              <button type="button" class="btn-shree-chip" data-motto="॥ हरे कृष्ण ॥">🌸 ॥ हरे कृष्ण ॥</button>
+              <button type="button" class="btn-shree-chip" data-motto="॥ Hare Krishna ॥">🦚 ॥ Hare Krishna ॥</button>
+              <button type="button" class="btn-shree-chip" data-motto="॥ ॐ नमः शिवाय ॥">🔱 ॥ ॐ नमः शिवाय ॥</button>
+              <button type="button" class="btn-shree-chip" data-motto="॥ जय श्री राम ॥">🏹 ॥ जय श्री राम ॥</button>
+              <button type="button" class="btn-shree-chip" data-motto="॥ श्री राधारमणो विजयते ॥">🦚 ॥ श्री राधारमणो विजयते ॥</button>
+              <button type="button" class="btn-shree-chip" data-motto="॥ जय माता दी ॥">🌺 ॥ जय माता दी ॥</button>
+              <button type="button" class="btn-shree-chip" data-motto="॥ ੴ सतिगुर प्रसादि ॥">ੴ ॥ ੴ सतिगुर प्रसादि ॥</button>
+              <button type="button" class="btn-shree-chip" data-motto="॥ ॐ नमो जिनेश्वराय ॥">☸️ ॥ ॐ नमो जिनेश्वराय ॥</button>
               <button type="button" class="btn-shree-chip" data-motto="॥ ॐ ॥">🕉️ ॥ ॐ ॥</button>
               <button type="button" class="btn-shree-chip btn-shree-none" data-motto="">🚫 None (Remove)</button>
             </div>
@@ -114,22 +114,32 @@ export function renderClassicTemplate(data, options = { isPreview: false, editin
 
           <div style="margin-top: 14px; text-align: left;">
             <label style="font-size: 0.78rem; font-weight: 600; color: #6E6357; display: block; margin-bottom: 5px;">Custom Blessing / Motto:</label>
-            <input type="text" class="inline-field-input" data-field="auspiciousMotto" id="field-custom-motto" placeholder="Type custom blessing (e.g. Hare Krishna, जय माता दी, राधे राधे)" value="${data.auspiciousMotto !== undefined ? data.auspiciousMotto : "॥ श्री गणेशाय नमः ॥"}" style="width: 100%;">
+            <input type="text" class="inline-field-input" data-field="auspiciousMotto" id="field-custom-motto" placeholder="Type custom blessing (e.g. ॥ हरे कृष्ण ॥, ॥ राधे राधे ॥)" value="${(() => {
+              let m = data.auspiciousMotto !== undefined ? data.auspiciousMotto : "॥ श्री गणेशाय नमः ॥";
+              if (m === "हरे कृष्ण") m = "॥ हरे कृष्ण ॥";
+              if (m === "Hare Krishna") m = "॥ Hare Krishna ॥";
+              return m;
+            })()}" style="width: 100%;">
           </div>
         ` : `
-          ${data.auspiciousMotto !== "" ? `
-            <span class="t-om ${isLive ? "living-editable" : ""}" 
-                  ${isLive ? 'contenteditable="true" spellcheck="false" data-field="auspiciousMotto" title="Click to edit or choose blessing"' : ""}>
-              ${data.auspiciousMotto !== undefined ? data.auspiciousMotto : "॥ श्री गणेशाय नमः ॥"}
-            </span>
-          ` : (isLive ? `
-            <span class="t-om t-muted" style="font-style: italic; font-size: 0.84rem; opacity: 0.7;" title="Auspicious blessing is hidden">
-              [No Blessing Line]
-            </span>
-          ` : "")}
-          ${isLive ? `
-            <button type="button" class="btn-shree-inline-edit section-edit-trigger" data-section="shree" title="Choose or customize auspicious header">✎ Edit Blessing</button>
-          ` : ""}
+          <div class="t-shree-wrap">
+            ${data.auspiciousMotto !== "" ? `
+              <span class="t-om ${isLive ? "living-editable" : ""}" 
+                    ${isLive ? 'contenteditable="true" spellcheck="false" data-field="auspiciousMotto" title="Click to edit or choose blessing"' : ""}>${(() => {
+                      let m = data.auspiciousMotto !== undefined ? data.auspiciousMotto : "॥ श्री गणेशाय नमः ॥";
+                      if (m === "हरे कृष्ण") m = "॥ हरे कृष्ण ॥";
+                      if (m === "Hare Krishna") m = "॥ Hare Krishna ॥";
+                      return m;
+                    })()}</span>
+            ` : (isLive ? `
+              <span class="t-om t-muted" style="font-style: italic; font-size: 0.84rem; opacity: 0.7;" title="Auspicious blessing is hidden">
+                [No Blessing Line]
+              </span>
+            ` : "")}
+            ${isLive ? `
+              <button type="button" class="btn-shree-mini-edit section-edit-trigger" data-section="shree" title="Edit blessing (Hare Krishna, Ganesh, etc.)">✎</button>
+            ` : ""}
+          </div>
         `}
       </div>
       `}
