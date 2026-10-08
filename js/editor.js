@@ -996,7 +996,28 @@ async function initEditor() {
   if (printPdfBtn) {
     printPdfBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      window.print();
+      // 1. Close inspector drawer if open
+      closeDrawer();
+
+      // 2. Clear any active inline editing sections so clean final document is rendered
+      if (activeEditingSections && activeEditingSections.size > 0) {
+        activeEditingSections.clear();
+        updateLivePreview();
+      }
+
+      // 3. Set temporary clean document title so browser names PDF nicely (e.g. "Satyam_Marriage_Biodata.pdf")
+      const rawName = (biodata?.personal?.fullName || "Candidate").trim();
+      const safeName = rawName.replace(/[^a-zA-Z0-9]/g, "_");
+      const oldTitle = document.title;
+      document.title = `${safeName}_Marriage_Biodata`;
+
+      // 4. Trigger print
+      setTimeout(() => {
+        window.print();
+        setTimeout(() => {
+          document.title = oldTitle;
+        }, 2000);
+      }, 150);
     });
   }
 

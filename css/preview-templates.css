@@ -1674,45 +1674,306 @@ strong.living-editable:focus {
    PRINT / PDF STYLES (Section 18 of Spec)
    ========================================================================== */
 @media print {
-  body {
-    background: #FFF !important;
-    color: #000 !important;
+  @page {
+    size: A4 portrait;
+    margin: 8mm 10mm;
   }
 
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  html, body {
+    background: #FFFFFF !important;
+    color: var(--t-text, #2D2723) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+    -webkit-font-smoothing: antialiased !important;
+  }
+
+  /* Completely hide all UI Chrome & Edit Controls */
   nav, header, footer, .demo-mode-banner, .editor-header, .editor-sidebar,
   .btn, .no-print, .preview-actions-bar, .preview-toolbar, .editor-topbar,
-  .public-bottom-bar,
+  .public-bottom-bar, .floating-glass-dock, .floating-quick-dock,
+  .studio-drawer, .drawer-backdrop, .toast-container, .canvas-ambient-glow,
   .master-edit-badge, .section-edit-trigger, .section-done-btn,
   .btn-sec-hide-toggle, .btn-field-hide-toggle, .btn-add-section-extra-field,
   .btn-delete-custom-field, .t-editing-pill, .t-section-hidden-notice,
-  .photo-hover-pill, .floating-quick-dock, .studio-drawer, .drawer-backdrop,
-  .btn-add-sibling-paper, .btn-delete-sibling-item, .section-hidden-alert-banner, .inline-sibling-select,
-  .t-top-bar-placeholder, .t-frame-corners {
+  .photo-hover-pill, .btn-shree-edit-right, .btn-shree-mini-edit,
+  .btn-add-sibling-paper, .btn-delete-sibling-item, .section-hidden-alert-banner,
+  .inline-sibling-select, .t-top-bar-placeholder, .shree-preset-chips-container {
     display: none !important;
   }
 
-  .t-paper-top-bar {
-    justify-content: center !important;
-    border-bottom: 1px solid #D6CBC0 !important;
-    margin-bottom: 18px !important;
-  }
-
-  .template-classic {
-    border: none !important;
+  /* Prevent editing underlines or badges in print */
+  .living-editable {
+    border-bottom: none !important;
     box-shadow: none !important;
-    padding: 0 !important;
+    background: transparent !important;
+    text-decoration: none !important;
+  }
+
+  /* Reset layout wrappers so biodata is centered and full width on A4 */
+  .ambient-studio-wrapper,
+  .canvas-hero-stage,
+  .preview-canvas-wrap {
+    background: none !important;
     margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
     max-width: 100% !important;
-    background: #FFF !important;
+    display: block !important;
+    overflow: visible !important;
   }
 
+  /* The Royal Photo-Frame Biodata Canvas */
+  .template-classic {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 24px 28px !important;
+    background: var(--t-bg, #FFFDF9) !important;
+    color: var(--t-text, #2D2723) !important;
+    border-radius: 6px !important;
+    /* Rich Photo-Frame Moulding Border in Print */
+    border: 3.5px solid var(--t-border, #E8D8C3) !important;
+    box-shadow: 0 0 0 1.5px var(--t-accent, rgba(201, 151, 56, 0.45)) !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Preserve Photo-Frame Double-Fillet Inset Line */
   .template-classic::before {
-    display: none !important;
+    display: block !important;
+    content: "" !important;
+    position: absolute !important;
+    top: 8px !important;
+    left: 8px !important;
+    right: 8px !important;
+    bottom: 8px !important;
+    border: 1.2px solid var(--t-inner-border, #E8D3B8) !important;
+    outline: 1px solid var(--t-accent, rgba(201, 151, 56, 0.45)) !important;
+    outline-offset: -4px !important;
+    pointer-events: none !important;
+    border-radius: 4px !important;
   }
 
-  @page {
-    size: A4 portrait;
-    margin: 1.4cm;
+  /* Preserve 4 Royal Corner Ornaments */
+  .t-frame-corners {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .t-corner {
+    display: block !important;
+    position: absolute !important;
+    width: 20px !important;
+    height: 20px !important;
+    border-color: var(--t-accent, #C99738) !important;
+  }
+
+  .t-corner-tl {
+    top: 12px !important;
+    left: 12px !important;
+    border-top: 2px solid var(--t-accent, #C99738) !important;
+    border-left: 2px solid var(--t-accent, #C99738) !important;
+  }
+  .t-corner-tr {
+    top: 12px !important;
+    right: 12px !important;
+    border-top: 2px solid var(--t-accent, #C99738) !important;
+    border-right: 2px solid var(--t-accent, #C99738) !important;
+  }
+  .t-corner-bl {
+    bottom: 12px !important;
+    left: 12px !important;
+    border-bottom: 2px solid var(--t-accent, #C99738) !important;
+    border-left: 2px solid var(--t-accent, #C99738) !important;
+  }
+  .t-corner-br {
+    bottom: 12px !important;
+    right: 12px !important;
+    border-bottom: 2px solid var(--t-accent, #C99738) !important;
+    border-right: 2px solid var(--t-accent, #C99738) !important;
+  }
+
+  .t-corner::after {
+    display: block !important;
+    content: "" !important;
+    position: absolute !important;
+    width: 3.5px !important;
+    height: 3.5px !important;
+    background: var(--t-accent, #C99738) !important;
+    border-radius: 50% !important;
+  }
+  .t-corner-tl::after { top: 2px !important; left: 2px !important; }
+  .t-corner-tr::after { top: 2px !important; right: 2px !important; }
+  .t-corner-bl::after { bottom: 2px !important; left: 2px !important; }
+  .t-corner-br::after { bottom: 2px !important; right: 2px !important; }
+
+  /* Top Bar */
+  .t-paper-top-bar {
+    display: flex !important;
+    justify-content: center !important;
+    border-bottom: 1px solid var(--t-accent, rgba(201, 151, 56, 0.3)) !important;
+    margin-bottom: 14px !important;
+    padding-bottom: 6px !important;
+    width: 100% !important;
+  }
+  .t-paper-top-bar .t-classic-badge {
+    font-size: 0.8rem !important;
+    letter-spacing: 3px !important;
+    margin: 0 !important;
+  }
+
+  /* Auspicious Mantra Header */
+  .t-classic-shree {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-bottom: 18px !important;
+    position: relative !important;
+  }
+  .t-classic-shree::after {
+    display: block !important;
+    content: "" !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 10% !important;
+    right: 10% !important;
+    height: 1px !important;
+    background: linear-gradient(90deg, transparent, var(--t-accent, #C99738), transparent) !important;
+    z-index: 0 !important;
+  }
+  .t-shree-wrap {
+    position: relative !important;
+    z-index: 1 !important;
+    background: var(--t-bg, #FFFDF9) !important;
+    padding: 0 18px !important;
+  }
+  .t-om {
+    font-size: 1.18rem !important;
+    letter-spacing: 2.5px !important;
+    color: var(--t-primary, #7B113A) !important;
+  }
+
+  /* Candidate Portrait Frame */
+  .t-classic-photo-wrap {
+    width: 120px !important;
+    height: 120px !important;
+    padding: 3.5px !important;
+    background: linear-gradient(135deg, var(--t-accent, #C99738), var(--t-primary, #8B1E3F)) !important;
+    box-shadow: 
+      0 0 0 2px #FFFFFF,
+      0 0 0 4.5px var(--t-accent, #C99738) !important;
+    border-radius: 50% !important;
+    display: inline-block !important;
+    flex-shrink: 0 !important;
+  }
+  .t-classic-photo {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
+  }
+
+  /* Hero Section */
+  .t-classic-hero {
+    display: flex !important;
+    align-items: center !important;
+    gap: 22px !important;
+    padding-bottom: 16px !important;
+    margin-bottom: 18px !important;
+    border-bottom: 1.5px solid var(--t-border, #EFE4D6) !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+  .t-classic-name {
+    font-size: 1.85rem !important;
+    color: var(--t-primary, #7B113A) !important;
+    margin-bottom: 4px !important;
+  }
+  .t-classic-subtitle {
+    font-size: 0.95rem !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* Chips & Tags */
+  .t-chip {
+    padding: 4px 10px !important;
+    font-size: 0.78rem !important;
+    border: 1px solid var(--t-border, #F5DFBC) !important;
+    border-radius: 16px !important;
+  }
+
+  /* Section Headings */
+  .t-classic-heading {
+    font-size: 1.08rem !important;
+    margin-bottom: 12px !important;
+    padding-bottom: 4px !important;
+    border-bottom: 1px solid var(--t-border, #F0DFCC) !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  /* Cards & Boxes */
+  .t-classic-card,
+  .t-classic-about,
+  .t-classic-family-grid,
+  .t-classic-horo-grid,
+  .t-contact-box {
+    border-radius: 6px !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .t-classic-about {
+    padding: 12px 16px !important;
+    margin-bottom: 16px !important;
+    font-size: 0.88rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .t-classic-section {
+    margin-bottom: 16px !important;
+    padding-bottom: 16px !important;
+    border-bottom: 1px solid var(--t-border, #EFE4D6) !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .t-classic-grid-2 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .t-classic-table {
+    font-size: 0.84rem !important;
+  }
+  .t-classic-table td {
+    padding: 5px 8px !important;
+  }
+  .t-classic-table tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .t-classic-footer {
+    padding-top: 14px !important;
+    margin-top: 14px !important;
+    border-top: 1px solid var(--t-border, #DDD6CA) !important;
+    text-align: center !important;
+    font-size: 0.78rem !important;
+    page-break-before: avoid !important;
   }
 }
 

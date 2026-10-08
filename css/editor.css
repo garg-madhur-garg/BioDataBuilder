@@ -1024,16 +1024,36 @@ body[data-theme="royal-maroon"] {
     background: #FFFFFF !important;
     height: auto !important;
     overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
   }
 
   .editor-topbar,
   .floating-glass-dock,
+  .floating-quick-dock,
   .studio-drawer,
   .drawer-backdrop,
   .canvas-ambient-glow,
   .section-edit-trigger,
   .photo-hover-pill,
-  .toast-container {
+  .toast-container,
+  .btn-shree-edit-right,
+  .btn-shree-mini-edit,
+  .master-edit-badge,
+  .section-done-btn,
+  .btn-sec-hide-toggle,
+  .btn-field-hide-toggle,
+  .btn-add-section-extra-field,
+  .btn-delete-custom-field,
+  .t-editing-pill,
+  .t-section-hidden-notice,
+  .btn-add-sibling-paper,
+  .btn-delete-sibling-item,
+  .section-hidden-alert-banner,
+  .inline-sibling-select,
+  .t-top-bar-placeholder,
+  .shree-preset-chips-container {
     display: none !important;
   }
 
@@ -1057,15 +1077,11 @@ body[data-theme="royal-maroon"] {
     padding: 0 !important;
   }
 
-  .template-classic {
-    box-shadow: none !important;
-    border: none !important;
-    padding: 20px !important;
-  }
-
   .living-editable {
     box-shadow: none !important;
     background: none !important;
+    border-bottom: none !important;
+    text-decoration: none !important;
   }
 }
 
