@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Biodata Builder</title>
+  <meta name="description" content="Manage, edit, publish and share your marriage biodata.">
+  
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <!-- Dashboard Top Navigation -->
+  <header class="dash-header">
+    <div class="container dash-header-inner">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-icon">💍</span>
+        <span>BiodataBuilder</span>
+      </a>
+
+      <div class="dash-user-meta">
+        <div class="dash-user-badge">
+          <div class="dash-avatar-circle" id="user-avatar-initial">U</div>
+          <span id="user-badge-name">Loading...</span>
+        </div>
+        <button id="logout-btn" class="btn btn-secondary btn-sm" title="Log out of account">Log Out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="dash-main">
+    <div class="container">
+      <!-- Welcome Header -->
+      <div class="dash-welcome">
+        <h1 class="dash-welcome-title">Welcome, <span id="user-greeting-name">Friend</span> 👋</h1>
+        <p class="dash-welcome-sub">Manage your marriage biodata profile, customize details, and share with prospective matches.</p>
+      </div>
+
+      <!-- Main Biodata Card -->
+      <div class="biodata-hero-card">
+        <div class="biodata-card-header">
+          <div class="biodata-meta-wrap">
+            <div class="biodata-thumb-wrap">
+              <img id="dash-biodata-thumb" src="assets/images/profile.svg" alt="Profile Thumbnail" class="biodata-thumb">
+            </div>
+            <div>
+              <h2 class="biodata-title" id="dash-biodata-title">Loading Biodata...</h2>
+              <div class="biodata-submeta">
+                <span id="dash-status-badge" class="badge badge-draft">● Checking...</span>
+                <span>•</span>
+                <span>Template: <strong id="dash-template-name">CLASSIC</strong></span>
+                <span>•</span>
+                <span>Updated: <span id="dash-updated-at">—</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <a href="editor.html" class="btn btn-primary" id="dash-edit-btn">
+              <span>✏️ Edit Biodata</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Shareable Link Box -->
+        <div class="biodata-url-box">
+          <div>
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; margin-bottom: 4px;">
+              Public Biodata Link
+            </div>
+            <div class="biodata-url-text" id="dash-public-url">Generating link...</div>
+          </div>
+          <div class="biodata-url-actions">
+            <button class="btn btn-secondary btn-sm" id="dash-copy-url-btn">📋 Copy Link</button>
+            <button class="btn btn-secondary btn-sm" id="dash-whatsapp-share-btn" style="color: #15803D;">💬 WhatsApp</button>
+          </div>
+        </div>
+
+        <!-- Main Actions Bar -->
+        <div class="biodata-actions-bar">
+          <div class="actions-group-left">
+            <a href="editor.html" class="btn btn-primary">✏️ Open Editor</a>
+            <button class="btn btn-outline" id="dash-publish-btn">Publish Live</button>
+            <button class="btn btn-secondary" onclick="window.open(document.getElementById('dash-public-url').textContent, '_blank')">👁️ View Live Profile</button>
+          </div>
+
+          <div class="actions-group-right">
+            <button class="btn btn-secondary btn-sm" onclick="window.open(document.getElementById('dash-public-url').textContent + '&print=1', '_blank')">🖨️ Print / PDF</button>
+            <button class="btn btn-secondary btn-sm" id="dash-export-json-btn">💾 Backup JSON</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Guidance & Feature Cards -->
+      <div class="dash-info-grid">
+        <div class="info-card">
+          <div class="info-card-icon">⚡</div>
+          <h3 class="info-card-title">Live Editor</h3>
+          <p class="info-card-desc">Type your details on the left, and watch the authentic matrimonial document assemble in real time on the right.</p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-icon">🔒</div>
+          <h3 class="info-card-title">Privacy Controls</h3>
+          <p class="info-card-desc">Keep personal contact numbers, salary, or residence private with granular visibility checkboxes in the editor.</p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-icon">📄</div>
+          <h3 class="info-card-title">Print & Share Ready</h3>
+          <p class="info-card-desc">Download a cleanly formatted A4 portrait document or share your personalized URL with family and relatives.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>

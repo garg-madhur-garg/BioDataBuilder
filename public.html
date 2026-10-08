@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marriage Biodata Profile</title>
+  <meta name="description" content="View marriage biodata profile.">
+  
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/preview-templates.css">
+  <style>
+    body {
+      background-color: #F7F3ED;
+      min-height: 100vh;
+      padding: 40px 16px 80px;
+    }
+
+    .public-container {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .public-bottom-bar {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(28, 25, 23, 0.94);
+      backdrop-filter: blur(10px);
+      padding: 8px 16px;
+      border-radius: var(--radius-full);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 100;
+    }
+
+    .btn-public-action {
+      background: transparent;
+      color: #FFF;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background var(--tr-fast);
+    }
+
+    .btn-public-action:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-public-action.btn-accent {
+      background: #15803D;
+    }
+
+    .btn-public-action.btn-accent:hover {
+      background: #166534;
+    }
+
+    .private-notice-card {
+      background: #FFF;
+      padding: 50px 30px;
+      border-radius: var(--radius-md);
+      text-align: center;
+      max-width: 500px;
+      margin: 80px auto;
+      box-shadow: var(--shadow-md);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="public-container" id="public-content-container">
+    <div style="text-align: center; padding: 60px 0; color: var(--text-muted);">
+      <p>Loading marriage profile...</p>
+    </div>
+  </div>
+
+  <!-- Floating Public Toolbar -->
+  <div class="public-bottom-bar no-print" id="public-actions-bar" style="display: none;">
+    <button class="btn-public-action btn-accent" id="btn-share-wa">
+      <span>💬</span>
+      <span>Share on WhatsApp</span>
+    </button>
+    <button class="btn-public-action" id="btn-print-doc">
+      <span>🖨️</span>
+      <span>Print / PDF</span>
+    </button>
+    <button class="btn-public-action" id="btn-copy-link">
+      <span>🔗</span>
+      <span id="copy-btn-text">Copy Link</span>
+    </button>
+  </div>
+
+  <script type="module">
+    import { getBiodataBySlug } from "./js/firestore.js";
+    import { renderClassicTemplate } from "./templates/classic.js";
+
+    async function initPublic() {
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get("b") || params.get("slug") || "rahul-sharma";
+      const shouldPrint = params.get("print") === "1";
+
+      const container = document.getElementById("public-content-container");
+      const actionsBar = document.getElementById("public-actions-bar");
+
+      try {
+        const biodata = await getBiodataBySlug(slug);
+
+        if (!biodata) {
+          container.innerHTML = `
+            <div class="private-notice-card">
+              <div style="font-size: 3rem; margin-bottom: 12px;">🔒</div>
+              <h2 style="font-family: var(--font-serif); margin-bottom: 10px;">Biodata is Private or Not Found</h2>
+              <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px;">
+                This marriage profile is either currently in draft mode or the link has expired.
+              </p>
+              <a href="index.html" class="btn btn-primary btn-sm">Create Your Own Biodata</a>
+            </div>
+          `;
+          return;
+        }
+
+        // Set Dynamic Page Title & SEO description
+        const candidateName = biodata.personal?.fullName || "Candidate";
+        document.title = `${candidateName} — Marriage Biodata`;
+
+        // Render Template
+        container.innerHTML = renderClassicTemplate(biodata, { isPreview: false });
+        actionsBar.style.display = "flex";
+
+        // Setup Buttons
+        const waBtn = document.getElementById("btn-share-wa");
+        const printBtn = document.getElementById("btn-print-doc");
+        const copyBtn = document.getElementById("btn-copy-link");
+        const copyText = document.getElementById("copy-btn-text");
+
+        const curUrl = window.location.href.replace("&print=1", "");
+
+        if (waBtn) {
+          waBtn.onclick = () => {
+            const text = encodeURIComponent(`Namaste 🙏\n\nPlease find the marriage biodata profile of ${candidateName}:\n${curUrl}`);
+            window.open(`https://wa.me/?text=${text}`, "_blank");
+          };
+        }
+
+        if (printBtn) {
+          printBtn.onclick = () => window.print();
+        }
+
+        if (copyBtn) {
+          copyBtn.onclick = () => {
+            navigator.clipboard.writeText(curUrl);
+            copyText.textContent = "Copied! ✓";
+            setTimeout(() => (copyText.textContent = "Copy Link"), 2000);
+          };
+        }
+
+        // If requested with print=1, trigger print
+        if (shouldPrint) {
+          setTimeout(() => window.print(), 500);
+        }
+
+      } catch (err) {
+        console.error("Public profile load error:", err);
+        container.innerHTML = `
+          <div class="private-notice-card">
+            <h2>Unable to Load Profile</h2>
+            <p>Please check your connection and try again.</p>
+          </div>
+        `;
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initPublic);
+    } else {
+      initPublic();
+    }
+  </script>
+</body>
+</html>

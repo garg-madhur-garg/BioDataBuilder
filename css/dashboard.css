@@ -1,0 +1,228 @@
+/* ==========================================================================
+   DASHBOARD STYLES — Authenticated User Management Hub
+   ========================================================================== */
+
+.dash-header {
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-light);
+  padding: 16px 0;
+}
+
+.dash-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dash-user-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dash-user-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-page);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-light);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.dash-avatar-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.dash-main {
+  padding: 40px 0 60px;
+}
+
+.dash-welcome {
+  margin-bottom: 32px;
+}
+
+.dash-welcome-title {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.dash-welcome-sub {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+}
+
+/* Biodata Hero Card */
+.biodata-hero-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-md);
+  padding: 32px;
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.biodata-hero-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--primary), var(--gold));
+}
+
+.biodata-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.biodata-meta-wrap {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.biodata-thumb-wrap {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-full);
+  padding: 3px;
+  background: linear-gradient(135deg, var(--gold), var(--primary));
+  flex-shrink: 0;
+}
+
+.biodata-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-full);
+  background: #FFF;
+}
+
+.biodata-title {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.biodata-submeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+
+/* Slug & Share Box */
+.biodata-url-box {
+  background: var(--bg-page);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.biodata-url-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: monospace;
+  font-size: 0.95rem;
+  color: var(--primary);
+  word-break: break-all;
+}
+
+.biodata-url-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Card Actions Toolbar */
+.biodata-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-light);
+}
+
+.actions-group-left, .actions-group-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Quick Info Grid */
+.dash-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.info-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 24px;
+}
+
+.info-card-icon {
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+}
+
+.info-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.info-card-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 800px) {
+  .dash-info-grid {
+    grid-template-columns: 1fr;
+  }
+  .biodata-actions-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .actions-group-left, .actions-group-right {
+    justify-content: center;
+  }
+}

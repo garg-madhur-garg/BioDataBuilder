@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biodata Builder — Living Matrimonial Studio</title>
+  <meta name="description" content="Ultra-modern, distraction-free marriage biodata builder with living canvas and instant PDF download.">
+  
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/editor.css">
+  <link rel="stylesheet" href="css/preview-templates.css">
+</head>
+<body>
+
+  <div class="ambient-studio-wrapper">
+    <!-- 1. Whisper-Quiet Executive Topbar -->
+    <header class="editor-topbar">
+      <!-- Left: Brand & Status -->
+      <div class="topbar-left">
+        <a href="index.html" class="topbar-brand">
+          <span class="topbar-brand-icon">💍</span>
+          <span class="topbar-brand-name">BiodataBuilder</span>
+        </a>
+        <div class="save-status-indicator" id="save-status-indicator">
+          <span class="status-dot"></span>
+          <span class="status-label">Saved</span>
+        </div>
+      </div>
+
+      <!-- Center: Clean Document Title -->
+      <div class="topbar-center">
+        <span class="document-name" id="doc-title-display">Marriage Biodata</span>
+      </div>
+
+      <!-- Right: User Area -->
+      <div class="topbar-right">
+        <div id="topbar-user-area" class="user-profile-menu">
+          <button type="button" id="btn-open-auth-modal" class="btn-clean-ghost">☁️ Cloud Save</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 2. Centered Living Canvas Stage -->
+    <main class="canvas-hero-stage" id="canvas-hero-stage">
+      <div class="canvas-ambient-glow"></div>
+      <div class="preview-canvas-wrap">
+        <div id="live-preview-canvas" class="preview-canvas">
+          <!-- Dynamic Living Template Renders Here -->
+        </div>
+      </div>
+    </main>
+
+    <!-- 3. Futuristic Floating Glass Dock (macOS / Dynamic Island Style) -->
+    <nav class="floating-glass-dock" id="floating-glass-dock" aria-label="Studio Quick Actions">
+      <!-- Open Structured Drawer -->
+      <button type="button" id="btn-toggle-drawer" class="dock-pill-btn dock-btn-primary" title="Open complete details editor">
+        <span class="dock-icon">✏️</span>
+        <span class="dock-label">Edit Form</span>
+      </button>
+
+      <div class="dock-divider"></div>
+
+      <!-- Luxury Theme Selector Orbs -->
+      <div class="dock-theme-selector" title="Choose luxury theme palette">
+        <button type="button" class="theme-orb-btn active" data-theme="royal-maroon" title="Royal Maroon & Gold" style="--orb-color: #7B113A;"></button>
+        <button type="button" class="theme-orb-btn" data-theme="minimal-ivory" title="Minimalist Ivory & Silk" style="--orb-color: #E6E2D8;"></button>
+        <button type="button" class="theme-orb-btn" data-theme="midnight-luxury" title="Midnight Obsidian & Liquid Gold" style="--orb-color: #1A1816; --orb-border: #D4AF37;"></button>
+        <button type="button" class="theme-orb-btn" data-theme="sage-garden" title="Sage Garden & Sandalwood" style="--orb-color: #385141;"></button>
+      </div>
+
+      <div class="dock-divider"></div>
+
+      <!-- Sample Profile -->
+      <button type="button" id="btn-fill-sample" class="dock-pill-btn dock-btn-ghost" title="Auto-fill with sample biodata">
+        <span class="dock-icon">✨</span>
+        <span class="dock-label">Sample</span>
+      </button>
+
+      <!-- Share Trigger -->
+      <button type="button" id="btn-share-trigger" class="dock-pill-btn dock-btn-ghost" title="Share directly on WhatsApp or copy link">
+        <span class="dock-icon">🔗</span>
+        <span class="dock-label">Share</span>
+      </button>
+
+      <!-- Download PDF -->
+      <button type="button" id="print-pdf-btn" class="dock-pill-btn dock-btn-accent" title="Download High-Resolution Print PDF">
+        <span class="dock-icon">🖨️</span>
+        <span class="dock-label">PDF</span>
+      </button>
+    </nav>
+
+    <!-- 4. Slide-Over Studio Drawer (On-Demand Deep Inspector) -->
+    <div id="drawer-backdrop" class="drawer-backdrop"></div>
+    <aside id="studio-drawer" class="studio-drawer" aria-label="Biodata Field Inspector">
+      <div class="drawer-header">
+        <div class="drawer-title-wrap">
+          <h2 class="drawer-title">Studio Inspector</h2>
+          <span class="drawer-subtitle">All changes sync to paper in real-time</span>
+        </div>
+        <button type="button" id="btn-close-drawer" class="drawer-close-btn" aria-label="Close Inspector">&times;</button>
+      </div>
+
+      <!-- Clean Tab Navigation inside Drawer -->
+      <nav class="drawer-nav-tabs">
+        <button type="button" class="drawer-tab-btn active" data-target="pane-personal">Personal</button>
+        <button type="button" class="drawer-tab-btn" data-target="pane-education">Education</button>
+        <button type="button" class="drawer-tab-btn" data-target="pane-career">Career</button>
+        <button type="button" class="drawer-tab-btn" data-target="pane-family">Family</button>
+        <button type="button" class="drawer-tab-btn" data-target="pane-siblings">Siblings</button>
+        <button type="button" class="drawer-tab-btn" data-target="pane-lifestyle">Lifestyle</button>
+        <button type="button" class="drawer-tab-btn" data-target="pane-horoscope">Horoscope</button>
+        <button type="button" class="drawer-tab-btn" data-target="pane-preferences">Partner</button>
+        <button type="button" class="drawer-tab-btn" data-target="pane-contact">Contact</button>
+        <button type="button" class="drawer-tab-btn" data-target="pane-about">About Me</button>
+      </nav>
+
+      <!-- Panes Body -->
+      <div class="drawer-panes-body">
+        <!-- 1. Personal Details -->
+        <div class="form-section-pane active" id="pane-personal">
+          <h3 class="section-pane-title">Personal Details</h3>
+
+          <div class="clean-photo-row">
+            <div class="clean-photo-avatar">
+              <img id="avatar-preview-img" src="assets/images/profile.svg" alt="Profile">
+            </div>
+            <div>
+              <input type="file" id="profile-photo-input" accept="image/*" style="display: none;">
+              <button type="button" id="btn-upload-photo" class="btn-clean-ghost" style="font-size: 0.8rem; padding: 5px 12px;">📷 Upload Photo</button>
+              <button type="button" id="btn-remove-photo" style="background: none; border: none; color: #B91C1C; cursor: pointer; font-size: 0.78rem; margin-left: 8px;">Remove</button>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="field-fullName">Full Name</label>
+              <input type="text" id="field-fullName" class="form-input" placeholder="e.g. Rahul Sharma">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-gender">Gender</label>
+              <select id="field-gender" class="form-select">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row-3">
+            <div class="form-group">
+              <label class="form-label" for="field-dob">Date of Birth</label>
+              <input type="date" id="field-dob" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-age">Age</label>
+              <input type="text" id="field-age" class="form-input" placeholder="Auto" readonly style="background: #FAF7F2;">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-height">Height</label>
+              <input type="text" id="field-height" class="form-input" placeholder="e.g. 5 ft 10 in">
+            </div>
+          </div>
+
+          <div class="form-row-3">
+            <div class="form-group">
+              <label class="form-label" for="field-maritalStatus">Marital Status</label>
+              <select id="field-maritalStatus" class="form-select">
+                <option value="Never Married">Never Married</option>
+                <option value="Awaiting Divorce">Awaiting Divorce</option>
+                <option value="Divorced">Divorced</option>
+                <option value="Widowed">Widowed</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-complexion">Complexion</label>
+              <input type="text" id="field-complexion" class="form-input" placeholder="e.g. Fair / Wheatish">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-motherTongue">Mother Tongue</label>
+              <input type="text" id="field-motherTongue" class="form-input" placeholder="e.g. Hindi">
+            </div>
+          </div>
+
+          <div class="form-row-3">
+            <div class="form-group">
+              <label class="form-label" for="field-religion">Religion</label>
+              <input type="text" id="field-religion" class="form-input" placeholder="e.g. Hindu">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-caste">Caste</label>
+              <input type="text" id="field-caste" class="form-input" placeholder="e.g. Brahmin / Agarwal">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-gotra">Gotra</label>
+              <input type="text" id="field-gotra" class="form-input" placeholder="e.g. Kashyap / Garg">
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="field-currentCity">Current City</label>
+              <input type="text" id="field-currentCity" class="form-input" placeholder="e.g. New Delhi">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-nativePlace">Native Place</label>
+              <input type="text" id="field-nativePlace" class="form-input" placeholder="e.g. Jaipur, Rajasthan">
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="field-weight">Weight (Optional)</label>
+              <input type="text" id="field-weight" class="form-input" placeholder="e.g. 72 kg">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-bloodGroup">Blood Group</label>
+              <input type="text" id="field-bloodGroup" class="form-input" placeholder="e.g. B+">
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Education -->
+        <div class="form-section-pane" id="pane-education">
+          <h3 class="section-pane-title">Education Qualifications</h3>
+          <div id="education-items-list"></div>
+          <button type="button" id="btn-add-education" class="btn-add-item">+ Add Degree / Qualification</button>
+        </div>
+
+        <!-- 3. Career -->
+        <div class="form-section-pane" id="pane-career">
+          <h3 class="section-pane-title">Career & Profession</h3>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="field-profession">Profession / Field</label>
+              <input type="text" id="field-profession" class="form-input" placeholder="e.g. Software Engineer">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-designation">Designation</label>
+              <input type="text" id="field-designation" class="form-input" placeholder="e.g. Senior Tech Lead">
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="field-company">Company / Employer</label>
+              <input type="text" id="field-company" class="form-input" placeholder="e.g. Google India">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-workLocation">Job Location</label>
+              <input type="text" id="field-workLocation" class="form-input" placeholder="e.g. Bengaluru, Karnataka">
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                <label class="form-label" for="field-annualIncome" style="margin: 0;">Annual Income / Package</label>
+                <label class="privacy-toggle">
+                  <input type="checkbox" id="check-incomePublic" checked>
+                  <span>Show</span>
+                </label>
+              </div>
+              <input type="text" id="field-annualIncome" class="form-input" placeholder="e.g. ₹28 - 32 LPA">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-experience">Experience</label>
+              <input type="text" id="field-experience" class="form-input" placeholder="e.g. 6+ Years">
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Family Details -->
+        <div class="form-section-pane" id="pane-family">
+          <h3 class="section-pane-title">Family Background</h3>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="field-fatherName">Father's Name</label>
+              <input type="text" id="field-fatherName" class="form-input" placeholder="e.g. Shri Rajesh Sharma">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-fatherProfession">Father's Profession</label>
+              <input type="text" id="field-fatherProfession" class="form-input" placeholder="e.g. Businessman / Govt. Officer">
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="field-motherName">Mother's Name</label>
+              <input type="text" id="field-motherName" class="form-input" placeholder="e.g. Smt. Sunita Sharma">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-motherProfession">Mother's Profession</label>
+              <input type="text" id="field-motherProfession" class="form-input" placeholder="e.g. Homemaker / Teacher">
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="field-familyType">Family Type</label>
+              <select id="field-familyType" class="form-select">
+                <option value="Nuclear Family">Nuclear Family</option>
+                <option value="Joint Family">Joint Family</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-familyValues">Family Values</label>
+              <select id="field-familyValues" class="form-select">
+                <option value="Moderate">Moderate</option>
+                <option value="Traditional">Traditional</option>
+                <option value="Liberal">Liberal</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="field-familyNativePlace">Ancestral Origin</label>
+            <input type="text" id="field-familyNativePlace" class="form-input" placeholder="e.g. Jaipur, Rajasthan">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="field-additionalFamilyInfo">Additional Family Notes</label>
+            <textarea id="field-additionalFamilyInfo" class="form-textarea" placeholder="Brief note on grandparents, family reputation, or joint assets..."></textarea>
+          </div>
+        </div>
+
+        <!-- 5. Siblings -->
+        <div class="form-section-pane" id="pane-siblings">
+          <h3 class="section-pane-title">Brothers & Sisters</h3>
+          <div id="siblings-items-list"></div>
+          <button type="button" id="btn-add-sibling" class="btn-add-item">+ Add Brother / Sister</button>
+        </div>
+
+        <!-- 6. Lifestyle -->
+        <div class="form-section-pane" id="pane-lifestyle">
+          <h3 class="section-pane-title">Lifestyle & Habits</h3>
+          <div class="form-row-3">
+            <div class="form-group">
+              <label class="form-label" for="field-diet">Diet</label>
+              <select id="field-diet" class="form-select">
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Eggetarian">Eggetarian</option>
+                <option value="Non-Vegetarian">Non-Vegetarian</option>
+                <option value="Jain Vegetarian">Jain Vegetarian</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-smoking">Smoking</label>
+              <select id="field-smoking" class="form-select">
+                <option value="No">No</option>
+                <option value="Occasionally">Occasionally</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-drinking">Drinking</label>
+              <select id="field-drinking" class="form-select">
+                <option value="No">No</option>
+                <option value="Socially">Socially</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="field-languages">Languages Spoken</label>
+            <input type="text" id="field-languages" class="form-input" placeholder="e.g. Hindi, English, Punjabi">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="field-hobbies">Hobbies & Passions</label>
+            <input type="text" id="field-hobbies" class="form-input" placeholder="e.g. Photography, Travelling, Classical Music">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="field-interests">Interests</label>
+            <input type="text" id="field-interests" class="form-input" placeholder="e.g. Tech, Yoga, Gardening">
+          </div>
+        </div>
+
+        <!-- 7. Horoscope -->
+        <div class="form-section-pane" id="pane-horoscope">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1.5px solid #F0EAE1; padding-bottom: 8px;">
+            <h3 class="section-pane-title" style="margin: 0; border: none; padding: 0;">Horoscope / Kundli</h3>
+            <label class="privacy-toggle">
+              <input type="checkbox" id="check-horoscopeEnabled" checked>
+              <span>Include on Biodata</span>
+            </label>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="field-rashi">Rashi (Moon Sign)</label>
+              <input type="text" id="field-rashi" class="form-input" placeholder="e.g. Leo (Singh)">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-nakshatra">Nakshatra</label>
+              <input type="text" id="field-nakshatra" class="form-input" placeholder="e.g. Magha">
+            </div>
+          </div>
+          <div class="form-row-3">
+            <div class="form-group">
+              <label class="form-label" for="field-manglik">Manglik Status</label>
+              <select id="field-manglik" class="form-select">
+                <option value="Non-Manglik">Non-Manglik</option>
+                <option value="Manglik">Manglik</option>
+                <option value="Anshik Manglik">Anshik Manglik</option>
+                <option value="Don't Know">Don't Know</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-birthTime">Time of Birth</label>
+              <input type="text" id="field-birthTime" class="form-input" placeholder="e.g. 04:45 AM">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-birthPlace">Place of Birth</label>
+              <input type="text" id="field-birthPlace" class="form-input" placeholder="e.g. New Delhi">
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. Preferences -->
+        <div class="form-section-pane" id="pane-preferences">
+          <h3 class="section-pane-title">Partner Preferences</h3>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="field-prefAge">Preferred Age Range</label>
+              <input type="text" id="field-prefAge" class="form-input" placeholder="e.g. 24 - 28 Years">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-prefHeight">Preferred Height</label>
+              <input type="text" id="field-prefHeight" class="form-input" placeholder="e.g. 5 ft 3 in to 5 ft 8 in">
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="field-prefEducation">Education</label>
+              <input type="text" id="field-prefEducation" class="form-input" placeholder="e.g. Graduate / Post Graduate">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-prefProfession">Profession</label>
+              <input type="text" id="field-prefProfession" class="form-input" placeholder="e.g. Working Professional / Doctor">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="field-prefLocation">Preferred Location</label>
+            <input type="text" id="field-prefLocation" class="form-input" placeholder="e.g. Delhi NCR / Open to Relocate">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="field-prefExpectations">General Expectations</label>
+            <textarea id="field-prefExpectations" class="form-textarea" placeholder="Looking for an understanding, caring partner with shared family values..."></textarea>
+          </div>
+        </div>
+
+        <!-- 9. Contact Details -->
+        <div class="form-section-pane" id="pane-contact">
+          <h3 class="section-pane-title">Contact & Communication</h3>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="field-contactPerson">Contact Person</label>
+              <input type="text" id="field-contactPerson" class="form-input" placeholder="e.g. Rajesh Sharma (Father)">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-contactPersonRelation">Relation</label>
+              <input type="text" id="field-contactPersonRelation" class="form-input" placeholder="e.g. Father">
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                <label class="form-label" for="field-phone" style="margin: 0;">Phone Number</label>
+                <label class="privacy-toggle">
+                  <input type="checkbox" id="check-phonePublic" checked>
+                  <span>Show</span>
+                </label>
+              </div>
+              <input type="tel" id="field-phone" class="form-input" placeholder="+91 98765 43210">
+            </div>
+            <div class="form-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                <label class="form-label" for="field-whatsapp" style="margin: 0;">WhatsApp</label>
+                <label class="privacy-toggle">
+                  <input type="checkbox" id="check-whatsappPublic" checked>
+                  <span>Show</span>
+                </label>
+              </div>
+              <input type="tel" id="field-whatsapp" class="form-input" placeholder="+91 98765 43210">
+            </div>
+          </div>
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+              <label class="form-label" for="field-email" style="margin: 0;">Email</label>
+              <label class="privacy-toggle">
+                <input type="checkbox" id="check-emailPublic">
+                <span>Show on Biodata</span>
+              </label>
+            </div>
+            <input type="email" id="field-email" class="form-input" placeholder="family.contact@example.com">
+          </div>
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+              <label class="form-label" for="field-address" style="margin: 0;">Residence Address</label>
+              <label class="privacy-toggle">
+                <input type="checkbox" id="check-addressPublic">
+                <span>Show on Biodata</span>
+              </label>
+            </div>
+            <textarea id="field-address" class="form-textarea" placeholder="Full residential address (City, State)"></textarea>
+          </div>
+        </div>
+
+        <!-- 10. About Me -->
+        <div class="form-section-pane" id="pane-about">
+          <h3 class="section-pane-title">About Me Narrative</h3>
+          <div class="form-group">
+            <label class="form-label" for="field-aboutMe">Introduction Narrative</label>
+            <textarea id="field-aboutMe" class="form-textarea" style="min-height: 180px;" placeholder="Write a warm, honest introduction about yourself, your outlook towards life, relationships, and aspirations..."></textarea>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- In-Page Modal: Cloud Account -->
+  <div id="auth-modal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">☁️ Cloud Account</h3>
+        <button type="button" class="modal-close-btn" id="btn-close-auth-modal" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-auth-tabs">
+          <button type="button" class="modal-auth-tab active" data-tab="tab-login" id="btn-tab-login">Log In</button>
+          <button type="button" class="modal-auth-tab" data-tab="tab-signup" id="btn-tab-signup">Create Account</button>
+        </div>
+
+        <div id="modal-auth-alert" class="alert alert-error" style="display: none; margin-bottom: 16px;"></div>
+
+        <form id="modal-login-form" class="auth-tab-content active">
+          <div class="form-group">
+            <label class="form-label" for="modal-login-email">Email Address</label>
+            <input type="email" id="modal-login-email" class="form-input" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="modal-login-password">Password</label>
+            <input type="password" id="modal-login-password" class="form-input" placeholder="Enter password" required>
+          </div>
+          <button type="submit" class="btn-clean-primary btn-full" id="btn-modal-login-submit">Log In & Save</button>
+        </form>
+
+        <form id="modal-signup-form" class="auth-tab-content">
+          <div class="form-group">
+            <label class="form-label" for="modal-signup-name">Full Name</label>
+            <input type="text" id="modal-signup-name" class="form-input" placeholder="e.g. Rahul Sharma" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="modal-signup-email">Email Address</label>
+            <input type="email" id="modal-signup-email" class="form-input" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="modal-signup-password">Password</label>
+            <input type="password" id="modal-signup-password" class="form-input" placeholder="Minimum 6 characters" minlength="6" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="modal-signup-confirm">Confirm Password</label>
+            <input type="password" id="modal-signup-confirm" class="form-input" placeholder="Confirm password" minlength="6" required>
+          </div>
+          <button type="submit" class="btn-clean-primary btn-full" id="btn-modal-signup-submit">Create Account & Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- In-Page Modal: Share -->
+  <div id="share-modal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">🔗 Share Biodata</h3>
+        <button type="button" class="modal-close-btn" id="btn-close-share-modal" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="color: #6B635B; font-size: 0.88rem; margin-bottom: 16px;">
+          Share your royal marriage biodata directly with families on WhatsApp or send a clean link.
+        </p>
+
+        <div class="form-group">
+          <label class="form-label">Public Link</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="share-url-input" class="form-input" readonly style="background: #FAF7F2; font-family: monospace; font-size: 0.82rem;">
+            <button type="button" id="btn-copy-share-url" class="btn-clean-ghost">📋 Copy</button>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
+          <a href="#" id="btn-share-whatsapp" target="_blank" class="dock-pill-btn dock-btn-primary btn-full" style="background: #25D366; border-color: #25D366; text-decoration: none; text-align: center; justify-content: center;">
+            <span>💬 Share on WhatsApp</span>
+          </a>
+          <a href="#" id="btn-view-public-page" target="_blank" class="dock-pill-btn dock-btn-ghost btn-full" style="text-decoration: none; text-align: center; justify-content: center;">
+            <span>👁️ Open Full Profile</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <script type="module" src="js/editor.js"></script>
+</body>
+</html>
