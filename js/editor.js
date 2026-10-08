@@ -731,6 +731,10 @@ async function initEditor() {
     bindCheck("check-emailPublic", c.emailPublic === true);
     bindVal("field-address", c.address);
     bindCheck("check-addressPublic", c.addressPublic === true);
+    bindVal("field-homeMapUrl", c.homeMapUrl);
+    bindVal("field-currentAddress", c.currentAddress);
+    bindCheck("check-currentAddressPublic", c.currentAddressPublic === true);
+    bindVal("field-currentMapUrl", c.currentMapUrl);
 
     // Career
     bindVal("field-profession", car.profession);
@@ -856,6 +860,10 @@ async function initEditor() {
       case "check-emailPublic": biodata.contact.emailPublic = checked; break;
       case "field-address": biodata.contact.address = val; break;
       case "check-addressPublic": biodata.contact.addressPublic = checked; break;
+      case "field-homeMapUrl": biodata.contact.homeMapUrl = val; break;
+      case "field-currentAddress": biodata.contact.currentAddress = val; break;
+      case "check-currentAddressPublic": biodata.contact.currentAddressPublic = checked; break;
+      case "field-currentMapUrl": biodata.contact.currentMapUrl = val; break;
 
       case "field-profession": biodata.career.profession = val; break;
       case "field-designation": biodata.career.designation = val; break;

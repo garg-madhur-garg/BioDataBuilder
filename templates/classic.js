@@ -32,6 +32,18 @@ export function renderClassicTemplate(data, options = { isPreview: false, editin
   const showWhatsApp = Boolean(c.whatsapp);
   const showEmail = Boolean(c.email);
   const showAddress = Boolean(c.address);
+  const showCurrentAddress = Boolean(c.currentAddress);
+
+  // Helper for computing Google Map location URL
+  const getMapLink = (address, customUrl) => {
+    if (customUrl && typeof customUrl === "string" && customUrl.trim()) {
+      return customUrl.trim();
+    }
+    if (address && typeof address === "string" && address.trim()) {
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address.trim())}`;
+    }
+    return "";
+  };
 
   // Helper for hobby/language tags
   const renderTags = (val, className = "t-tag") => {
@@ -813,7 +825,10 @@ export function renderClassicTemplate(data, options = { isPreview: false, editin
             ${renderFieldEditRow("Phone", "contact.phone", c.phone)}
             ${renderFieldEditRow("WhatsApp", "contact.whatsapp", c.whatsapp)}
             ${renderFieldEditRow("Email", "contact.email", c.email)}
-            ${renderFieldEditRow("Residence Address", "contact.address", c.address)}
+            ${renderFieldEditRow("Home Address", "contact.address", c.address, "Permanent / Family residence address")}
+            ${renderFieldEditRow("Home Map Link", "contact.homeMapUrl", c.homeMapUrl, "Google Maps URL (optional, auto-links if blank)")}
+            ${renderFieldEditRow("Current Address", "contact.currentAddress", c.currentAddress, "Current city / flat / residence")}
+            ${renderFieldEditRow("Current Map Link", "contact.currentMapUrl", c.currentMapUrl, "Google Maps URL (optional, auto-links if blank)")}
             ${renderCustomFieldsEdit("contact")}
           </div>
           <button type="button" class="btn-add-section-extra-field" data-section="contact">+ Add Extra Field</button>
@@ -860,11 +875,35 @@ export function renderClassicTemplate(data, options = { isPreview: false, editin
             ` : ""}
 
             ${showAddress && !isFieldHidden("contact.address") ? `
-              <div class="t-contact-box" style="grid-column: 1 / -1;">
+              <div class="t-contact-box t-address-contact-box" style="grid-column: 1 / -1;">
                 <span class="t-c-icon">🏡</span>
-                <div>
-                  <div class="t-c-label">Family Residence</div>
-                  <div>${c.address}</div>
+                <div class="t-address-content">
+                  <div class="t-address-header">
+                    <div class="t-c-label">Home Address / Family Residence</div>
+                    ${getMapLink(c.address, c.homeMapUrl) ? `
+                      <a href="${getMapLink(c.address, c.homeMapUrl)}" target="_blank" rel="noopener noreferrer" class="t-map-link-badge" title="Open home address on Google Maps">
+                        <span class="t-map-pin">📍</span> Google Map
+                      </a>
+                    ` : ""}
+                  </div>
+                  <div class="t-address-val">${c.address}</div>
+                </div>
+              </div>
+            ` : ""}
+
+            ${showCurrentAddress && !isFieldHidden("contact.currentAddress") ? `
+              <div class="t-contact-box t-address-contact-box" style="grid-column: 1 / -1;">
+                <span class="t-c-icon">🏙️</span>
+                <div class="t-address-content">
+                  <div class="t-address-header">
+                    <div class="t-c-label">Current Address</div>
+                    ${getMapLink(c.currentAddress, c.currentMapUrl) ? `
+                      <a href="${getMapLink(c.currentAddress, c.currentMapUrl)}" target="_blank" rel="noopener noreferrer" class="t-map-link-badge" title="Open current address on Google Maps">
+                        <span class="t-map-pin">📍</span> Google Map
+                      </a>
+                    ` : ""}
+                  </div>
+                  <div class="t-address-val">${c.currentAddress}</div>
                 </div>
               </div>
             ` : ""}

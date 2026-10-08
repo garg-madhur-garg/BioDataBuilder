@@ -497,13 +497,31 @@
           </div>
           <div class="form-group">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-              <label class="form-label" for="field-address" style="margin: 0;">Residence Address</label>
+              <label class="form-label" for="field-address" style="margin: 0;">Home Address / Family Residence</label>
               <label class="privacy-toggle">
                 <input type="checkbox" id="check-addressPublic">
                 <span>Show on Biodata</span>
               </label>
             </div>
-            <textarea id="field-address" class="form-textarea" placeholder="Full residential address (City, State)"></textarea>
+            <textarea id="field-address" class="form-textarea" placeholder="Full permanent/family residence address (City, State)"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="field-homeMapUrl">Home Google Maps Location Link</label>
+            <input type="url" id="field-homeMapUrl" class="form-input" placeholder="https://maps.google.com/?q=... (Optional, auto-links if blank)">
+          </div>
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+              <label class="form-label" for="field-currentAddress" style="margin: 0;">Current / Present Address</label>
+              <label class="privacy-toggle">
+                <input type="checkbox" id="check-currentAddressPublic">
+                <span>Show on Biodata</span>
+              </label>
+            </div>
+            <textarea id="field-currentAddress" class="form-textarea" placeholder="Current living address / apartment / city (Optional)"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="field-currentMapUrl">Current Address Google Maps Location Link</label>
+            <input type="url" id="field-currentMapUrl" class="form-input" placeholder="https://maps.google.com/?q=... (Optional, auto-links if blank)">
           </div>
         </div>
 
