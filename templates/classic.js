@@ -81,6 +81,21 @@ export function renderClassicTemplate(data, options = { isPreview: false, editin
 
   return `
     <div class="template-classic theme-${activeTheme} ${isLive ? "is-preview living-document" : ""}" data-theme="${activeTheme}">
+      <!-- 4 Photo-Frame Corner Accents -->
+      <div class="t-frame-corners" aria-hidden="true">
+        <span class="t-corner t-corner-tl"></span>
+        <span class="t-corner t-corner-tr"></span>
+        <span class="t-corner t-corner-bl"></span>
+        <span class="t-corner t-corner-br"></span>
+      </div>
+
+      <!-- Top Paper Bar with Master Edit Tag (Placed at Very Top) -->
+      <div class="t-paper-top-bar">
+        <div class="t-top-bar-placeholder"></div>
+        <span class="t-classic-badge">MARRIAGE BIODATA</span>
+        ${isLive ? `<button type="button" class="master-edit-badge" id="btn-master-edit-paper" title="Open complete master inspector drawer">⚙️ Master Edit</button>` : `<div class="t-top-bar-placeholder"></div>`}
+      </div>
+
       <!-- Auspicious Header -->
       ${data.auspiciousMotto === "" && !isLive && !isEditing("shree") ? "" : `
       <div class="t-classic-shree ${isEditing("shree") ? "is-section-editing" : ""}">
@@ -136,20 +151,13 @@ export function renderClassicTemplate(data, options = { isPreview: false, editin
                 [No Blessing Line]
               </span>
             ` : "")}
-            ${isLive ? `
-              <button type="button" class="btn-shree-mini-edit section-edit-trigger" data-section="shree" title="Edit blessing (Hare Krishna, Ganesh, etc.)">✎</button>
-            ` : ""}
           </div>
+          ${isLive ? `
+            <button type="button" class="section-edit-trigger btn-shree-edit-right" data-section="shree" title="Edit blessing motto">✎ Edit</button>
+          ` : ""}
         `}
       </div>
       `}
-
-      <!-- Top Paper Bar with Master Edit Tag -->
-      <div class="t-paper-top-bar">
-        <div class="t-top-bar-placeholder"></div>
-        <span class="t-classic-badge">MARRIAGE BIODATA</span>
-        ${isLive ? `<button type="button" class="master-edit-badge" id="btn-master-edit-paper" title="Open complete master inspector drawer">⚙️ Master Edit</button>` : `<div class="t-top-bar-placeholder"></div>`}
-      </div>
 
       <!-- Hero Header with Direct Profile Edit -->
       <div class="t-classic-hero ${isEditing("hero") ? "is-section-editing" + (isSecHidden("hero") ? " is-section-hidden-editing" : "") : ""}">

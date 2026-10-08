@@ -4,12 +4,17 @@
 
 .template-classic {
   font-family: var(--font-sans);
-  background: #FFFDF9;
-  color: #2D2723;
+  background: var(--t-bg, #FFFDF9);
+  color: var(--t-text, #2D2723);
   padding: 44px;
-  border-radius: 12px;
-  box-shadow: 0 25px 60px -15px rgba(60, 40, 20, 0.12), 0 0 0 1px rgba(220, 205, 185, 0.6);
-  border: 1px solid #EFE4D6;
+  border-radius: 8px;
+  /* Authentic Multi-Tiered Royal Photo-Frame Border & Bevel Depth */
+  border: 4px solid var(--t-border, #E8D8C3);
+  box-shadow: 
+    0 0 0 2px var(--t-accent, rgba(201, 151, 56, 0.45)),
+    0 10px 32px -6px rgba(45, 30, 15, 0.18),
+    0 24px 65px -15px rgba(45, 30, 15, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.85);
   position: relative;
   max-width: 820px;
   margin: 0 auto;
@@ -17,8 +22,64 @@
 }
 
 .template-classic.is-preview {
-  padding: 36px;
+  padding: 34px 34px 44px 34px;
 }
+
+/* Authentic Royal Photo-Frame 4 Corner Ornaments */
+.t-frame-corners {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.t-corner {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  border-color: var(--t-accent, #C99738);
+  transition: border-color 0.3s ease;
+}
+
+.t-corner-tl {
+  top: 16px;
+  left: 16px;
+  border-top: 2.5px solid var(--t-accent, #C99738);
+  border-left: 2.5px solid var(--t-accent, #C99738);
+}
+.t-corner-tr {
+  top: 16px;
+  right: 16px;
+  border-top: 2.5px solid var(--t-accent, #C99738);
+  border-right: 2.5px solid var(--t-accent, #C99738);
+}
+.t-corner-bl {
+  bottom: 16px;
+  left: 16px;
+  border-bottom: 2.5px solid var(--t-accent, #C99738);
+  border-left: 2.5px solid var(--t-accent, #C99738);
+}
+.t-corner-br {
+  bottom: 16px;
+  right: 16px;
+  border-bottom: 2.5px solid var(--t-accent, #C99738);
+  border-right: 2.5px solid var(--t-accent, #C99738);
+}
+
+.t-corner::after {
+  content: "";
+  position: absolute;
+  width: 4.5px;
+  height: 4.5px;
+  background: var(--t-accent, #C99738);
+  border-radius: 50%;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+.t-corner-tl::after { top: 2px; left: 2px; }
+.t-corner-tr::after { top: 2px; right: 2px; }
+.t-corner-bl::after { bottom: 2px; left: 2px; }
+.t-corner-br::after { bottom: 2px; right: 2px; }
 
 /* ==========================================================================
    4 LUXURY MATRIMONIAL THEMES (PAGE & PAPER HARMONY)
@@ -1036,17 +1097,19 @@ strong.living-editable:focus {
   transform: translateY(-1px);
 }
 
-/* Ornamental Inner Border */
+/* Ornamental Double-Fillet Inner Border (Picture Frame Matting) */
 .template-classic::before {
   content: "";
   position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
-  bottom: 10px;
+  top: 11px;
+  left: 11px;
+  right: 11px;
+  bottom: 11px;
   border: 1.5px solid var(--t-inner-border, #E8D3B8);
+  outline: 1px solid var(--t-accent, rgba(201, 151, 56, 0.45));
+  outline-offset: -5px;
   pointer-events: none;
-  border-radius: 8px;
+  border-radius: 5px;
 }
 
 /* Auspicious Blessing */
@@ -1054,6 +1117,15 @@ strong.living-editable:focus {
   text-align: center;
   margin-bottom: 24px;
   position: relative;
+  width: 100%;
+}
+
+.btn-shree-edit-right {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
 }
 
 .t-om {
@@ -1201,8 +1273,11 @@ strong.living-editable:focus {
   height: 140px;
   border-radius: var(--radius-full);
   padding: 4px;
-  background: linear-gradient(135deg, #C99738, #8B1E3F);
-  box-shadow: 0 6px 16px rgba(139, 30, 63, 0.15);
+  background: linear-gradient(135deg, var(--t-accent, #C99738), var(--t-primary, #8B1E3F));
+  box-shadow: 
+    0 0 0 2.5px #FFFFFF,
+    0 0 0 5px var(--t-accent, #C99738),
+    0 10px 24px -4px rgba(45, 30, 15, 0.22);
 }
 
 .t-classic-photo {
@@ -1612,7 +1687,7 @@ strong.living-editable:focus {
   .btn-delete-custom-field, .t-editing-pill, .t-section-hidden-notice,
   .photo-hover-pill, .floating-quick-dock, .studio-drawer, .drawer-backdrop,
   .btn-add-sibling-paper, .btn-delete-sibling-item, .section-hidden-alert-banner, .inline-sibling-select,
-  .t-top-bar-placeholder {
+  .t-top-bar-placeholder, .t-frame-corners {
     display: none !important;
   }
 
