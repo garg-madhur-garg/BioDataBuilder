@@ -156,10 +156,15 @@ async function initEditor() {
     }
   }
 
-  // Sync Theme Orbs on Floating Dock
+  // Sync Theme Orbs on Floating Dock & Page-Wide Environment
   function syncThemeOrbsUI(currentTheme) {
+    const theme = currentTheme || "royal-maroon";
+    document.body.dataset.theme = theme;
+    const wrapper = document.querySelector(".ambient-studio-wrapper");
+    if (wrapper) wrapper.dataset.theme = theme;
+
     themeOrbs.forEach((orb) => {
-      orb.classList.toggle("active", orb.dataset.theme === currentTheme);
+      orb.classList.toggle("active", orb.dataset.theme === theme);
     });
   }
 

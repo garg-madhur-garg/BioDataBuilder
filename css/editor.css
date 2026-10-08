@@ -2,6 +2,156 @@
    BIODATA BUILDER — FUTURISTIC AMBIENT LIVING STUDIO (ZERO CLUTTER)
    ========================================================================== */
 
+/* --------------------------------------------------------------------------
+   PAGE-WIDE LUXURY THEME TOKENS
+   -------------------------------------------------------------------------- */
+
+/* 1. Royal Maroon & Gold (Default Auspicious Grandeur) */
+:root,
+.ambient-studio-wrapper,
+.ambient-studio-wrapper[data-theme="royal-maroon"],
+body[data-theme="royal-maroon"] .ambient-studio-wrapper {
+  --studio-bg: radial-gradient(circle at 50% 12%, #FFFDF9 0%, #F5EFE6 55%, #ECE2D4 100%);
+  --studio-glow: radial-gradient(circle, rgba(201, 151, 56, 0.09) 0%, rgba(255, 255, 255, 0) 70%);
+  --studio-topbar-bg: rgba(255, 255, 255, 0.88);
+  --studio-topbar-border: rgba(225, 215, 200, 0.65);
+  --studio-brand: #7B113A;
+  --studio-avatar-bg: #7B113A;
+  --studio-avatar-text: #FFFFFF;
+  --studio-doc-name: #4A443D;
+  --studio-topbar-btn-bg: #FFFFFF;
+  --studio-topbar-btn-border: #DFD8CE;
+  --studio-topbar-btn-text: #4A443D;
+  --studio-topbar-btn-hover-bg: #FAF7F2;
+  --studio-dock-bg: rgba(255, 255, 255, 0.86);
+  --studio-dock-border: rgba(255, 255, 255, 0.95);
+  --studio-dock-ring: rgba(220, 205, 185, 0.5);
+  --studio-dock-primary-bg: #7B113A;
+  --studio-dock-primary-text: #FFFFFF;
+  --studio-dock-primary-hover: #640C2E;
+  --studio-dock-primary-shadow: rgba(123, 17, 58, 0.25);
+  --studio-dock-ghost-bg: rgba(245, 240, 232, 0.7);
+  --studio-dock-ghost-border: rgba(220, 210, 195, 0.7);
+  --studio-dock-ghost-text: #4A443D;
+  --studio-dock-ghost-hover: #FFFFFF;
+  --studio-dock-divider: rgba(220, 210, 195, 0.7);
+  --studio-drawer-bg: rgba(255, 255, 255, 0.96);
+  --studio-drawer-header-bg: #FAF8F5;
+  --studio-drawer-border: #EAE3D9;
+  --studio-drawer-title: #7B113A;
+  --studio-drawer-tab-active-bg: #7B113A;
+  --studio-drawer-tab-active-text: #FFFFFF;
+  --studio-drawer-focus: #C99738;
+}
+
+/* 2. Minimalist Ivory & Champagne Silk (Kinfolk / Editorial) */
+.ambient-studio-wrapper[data-theme="minimal-ivory"],
+body[data-theme="minimal-ivory"] .ambient-studio-wrapper {
+  --studio-bg: radial-gradient(circle at 50% 12%, #FDFCFA 0%, #F3EFE9 55%, #E6E0D5 100%);
+  --studio-glow: radial-gradient(circle, rgba(168, 159, 145, 0.16) 0%, rgba(255, 255, 255, 0) 70%);
+  --studio-topbar-bg: rgba(250, 248, 245, 0.92);
+  --studio-topbar-border: rgba(224, 216, 205, 0.75);
+  --studio-brand: #2C2723;
+  --studio-avatar-bg: #2C2723;
+  --studio-avatar-text: #FFFFFF;
+  --studio-doc-name: #3D352E;
+  --studio-topbar-btn-bg: #FAF8F5;
+  --studio-topbar-btn-border: #DFD7CC;
+  --studio-topbar-btn-text: #2C2723;
+  --studio-topbar-btn-hover-bg: #F0EAE1;
+  --studio-dock-bg: rgba(250, 248, 245, 0.92);
+  --studio-dock-border: rgba(250, 248, 245, 0.95);
+  --studio-dock-ring: rgba(210, 202, 190, 0.55);
+  --studio-dock-primary-bg: #2C2723;
+  --studio-dock-primary-text: #FFFFFF;
+  --studio-dock-primary-hover: #171412;
+  --studio-dock-primary-shadow: rgba(44, 39, 35, 0.25);
+  --studio-dock-ghost-bg: rgba(240, 235, 227, 0.75);
+  --studio-dock-ghost-border: rgba(215, 207, 195, 0.75);
+  --studio-dock-ghost-text: #38342F;
+  --studio-dock-ghost-hover: #FFFFFF;
+  --studio-dock-divider: rgba(215, 205, 195, 0.75);
+  --studio-drawer-bg: rgba(250, 248, 245, 0.97);
+  --studio-drawer-header-bg: #F5EFE8;
+  --studio-drawer-border: #E2DDD4;
+  --studio-drawer-title: #2C2723;
+  --studio-drawer-tab-active-bg: #2C2723;
+  --studio-drawer-tab-active-text: #FFFFFF;
+  --studio-drawer-focus: #8C8275;
+}
+
+/* 3. Midnight Obsidian & Liquid Gold (Futuristic Royalty) */
+.ambient-studio-wrapper[data-theme="midnight-luxury"],
+body[data-theme="midnight-luxury"] .ambient-studio-wrapper {
+  --studio-bg: radial-gradient(circle at 50% 12%, #181512 0%, #100E0C 55%, #080706 100%);
+  --studio-glow: radial-gradient(circle, rgba(212, 175, 55, 0.14) 0%, rgba(10, 9, 8, 0) 70%);
+  --studio-topbar-bg: rgba(18, 16, 14, 0.94);
+  --studio-topbar-border: rgba(60, 52, 40, 0.85);
+  --studio-brand: #D4AF37;
+  --studio-avatar-bg: #D4AF37;
+  --studio-avatar-text: #141210;
+  --studio-doc-name: #E8E3DA;
+  --studio-topbar-btn-bg: #1C1916;
+  --studio-topbar-btn-border: #383024;
+  --studio-topbar-btn-text: #E8E3DA;
+  --studio-topbar-btn-hover-bg: #28241F;
+  --studio-dock-bg: rgba(18, 16, 14, 0.94);
+  --studio-dock-border: rgba(212, 175, 55, 0.35);
+  --studio-dock-ring: rgba(212, 175, 55, 0.25);
+  --studio-dock-primary-bg: linear-gradient(135deg, #E5C158, #C99738);
+  --studio-dock-primary-text: #141210;
+  --studio-dock-primary-hover: #F3C966;
+  --studio-dock-primary-shadow: rgba(212, 175, 55, 0.35);
+  --studio-dock-ghost-bg: rgba(30, 27, 24, 0.85);
+  --studio-dock-ghost-border: #383024;
+  --studio-dock-ghost-text: #E8E3DA;
+  --studio-dock-ghost-hover: #28241F;
+  --studio-dock-divider: rgba(60, 52, 40, 0.85);
+  --studio-drawer-bg: rgba(20, 18, 16, 0.98);
+  --studio-drawer-header-bg: #181512;
+  --studio-drawer-border: #332C20;
+  --studio-drawer-title: #D4AF37;
+  --studio-drawer-tab-active-bg: #D4AF37;
+  --studio-drawer-tab-active-text: #141210;
+  --studio-drawer-focus: #D4AF37;
+}
+
+/* 4. Sage Garden & Sandalwood (Serene Organic Sanctuary) */
+.ambient-studio-wrapper[data-theme="sage-garden"],
+body[data-theme="sage-garden"] .ambient-studio-wrapper {
+  --studio-bg: radial-gradient(circle at 50% 12%, #FAFBF8 0%, #EFF4ED 55%, #E1EBE0 100%);
+  --studio-glow: radial-gradient(circle, rgba(88, 129, 87, 0.14) 0%, rgba(255, 255, 255, 0) 70%);
+  --studio-topbar-bg: rgba(246, 250, 245, 0.92);
+  --studio-topbar-border: rgba(212, 224, 210, 0.75);
+  --studio-brand: #284735;
+  --studio-avatar-bg: #284735;
+  --studio-avatar-text: #FFFFFF;
+  --studio-doc-name: #284735;
+  --studio-topbar-btn-bg: #FFFFFF;
+  --studio-topbar-btn-border: #CAD5C6;
+  --studio-topbar-btn-text: #284735;
+  --studio-topbar-btn-hover-bg: #EFF5ED;
+  --studio-dock-bg: rgba(246, 250, 245, 0.92);
+  --studio-dock-border: rgba(246, 250, 245, 0.95);
+  --studio-dock-ring: rgba(200, 216, 198, 0.55);
+  --studio-dock-primary-bg: #284735;
+  --studio-dock-primary-text: #FFFFFF;
+  --studio-dock-primary-hover: #1B3325;
+  --studio-dock-primary-shadow: rgba(40, 71, 53, 0.25);
+  --studio-dock-ghost-bg: rgba(238, 245, 236, 0.85);
+  --studio-dock-ghost-border: rgba(200, 215, 198, 0.75);
+  --studio-dock-ghost-text: #284735;
+  --studio-dock-ghost-hover: #FFFFFF;
+  --studio-dock-divider: rgba(200, 215, 198, 0.75);
+  --studio-drawer-bg: rgba(248, 251, 247, 0.97);
+  --studio-drawer-header-bg: #EFF5ED;
+  --studio-drawer-border: #D2DED0;
+  --studio-drawer-title: #284735;
+  --studio-drawer-tab-active-bg: #284735;
+  --studio-drawer-tab-active-text: #FFFFFF;
+  --studio-drawer-focus: #3A5A40;
+}
+
 /* Fullscreen Ambient Stage */
 .ambient-studio-wrapper {
   display: flex;
@@ -9,20 +159,39 @@
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background: radial-gradient(circle at 50% 12%, #FFFDF9 0%, #F5EFE6 55%, #ECE2D4 100%);
+  background: var(--studio-bg);
   color: #2D2723;
   font-family: var(--font-sans);
   position: relative;
+  transition: background 0.35s ease, color 0.35s ease;
+}
+
+/* Page body fallback match */
+body[data-theme="midnight-luxury"] {
+  background-color: #100E0C;
+  color: #E8E3DA;
+}
+body[data-theme="sage-garden"] {
+  background-color: #FAFBF8;
+  color: #2C332D;
+}
+body[data-theme="minimal-ivory"] {
+  background-color: #FAF8F5;
+  color: #1F1B16;
+}
+body[data-theme="royal-maroon"] {
+  background-color: #FAF7F2;
+  color: #2D2723;
 }
 
 /* ==========================================================================
    1. WHISPER-QUIET EXECUTIVE TOPBAR
    ========================================================================== */
 .editor-topbar {
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--studio-topbar-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(225, 215, 200, 0.6);
+  border-bottom: 1px solid var(--studio-topbar-border);
   height: 52px;
   padding: 0 24px;
   display: flex;
@@ -32,6 +201,7 @@
   flex-shrink: 0;
   z-index: 60;
   box-shadow: 0 1px 4px rgba(45, 35, 20, 0.03);
+  transition: background 0.35s ease, border-color 0.35s ease;
 }
 
 .topbar-left {
@@ -57,9 +227,10 @@
   font-family: var(--font-royal);
   font-size: 1.15rem;
   font-weight: 700;
-  color: #7B113A;
+  color: var(--studio-brand);
   letter-spacing: 0.5px;
   white-space: nowrap;
+  transition: color 0.35s ease;
 }
 
 /* Subtle Live Save Status Indicator */
@@ -121,12 +292,13 @@
   font-family: var(--font-serif);
   font-size: 0.98rem;
   font-weight: 600;
-  color: #4A443D;
+  color: var(--studio-doc-name);
   letter-spacing: 0.3px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 320px;
+  transition: color 0.35s ease;
 }
 
 /* Topbar Right Area */
@@ -142,20 +314,19 @@
   font-size: 0.82rem;
   font-weight: 600;
   border-radius: 8px;
-  border: 1px solid #DFD8CE;
-  background: #FFFFFF;
-  color: #4A443D;
+  border: 1px solid var(--studio-topbar-btn-border);
+  background: var(--studio-topbar-btn-bg);
+  color: var(--studio-topbar-btn-text);
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
   gap: 6px;
 }
 .btn-clean-ghost:hover {
-  background: #FAF7F2;
-  border-color: #CFC5B8;
-  color: #1F1B16;
+  background: var(--studio-topbar-btn-hover-bg);
+  color: var(--studio-brand);
 }
 
 /* User Profile Badge (Minimal Avatar Circle + Log Out) */
@@ -169,8 +340,8 @@
   align-items: center;
   gap: 8px;
   padding: 3px 10px 3px 3px;
-  background: #F7F4EF;
-  border: 1px solid #EAE3D9;
+  background: var(--studio-dock-ghost-bg);
+  border: 1px solid var(--studio-topbar-btn-border);
   border-radius: 20px;
 }
 
@@ -178,14 +349,15 @@
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: #7B113A;
-  color: #FFFFFF;
+  background: var(--studio-avatar-bg);
+  color: var(--studio-avatar-text);
   font-size: 0.78rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
+  transition: background 0.35s ease, color 0.35s ease;
 }
 
 .btn-logout-clean {
@@ -224,9 +396,10 @@
   transform: translateX(-50%);
   width: 800px;
   height: 800px;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+  background: var(--studio-glow);
   pointer-events: none;
   z-index: 1;
+  transition: background 0.4s ease;
 }
 
 .preview-canvas-wrap {
@@ -253,19 +426,18 @@
   align-items: center;
   gap: 10px;
   padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.84);
+  background: var(--studio-dock-bg);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  box-shadow: 0 16px 40px -8px rgba(45, 35, 20, 0.18), 0 0 0 1px rgba(220, 205, 185, 0.5);
+  border: 1px solid var(--studio-dock-border);
+  box-shadow: 0 16px 40px -8px rgba(25, 20, 15, 0.18), 0 0 0 1px var(--studio-dock-ring);
   border-radius: 50px;
   z-index: 85;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .floating-glass-dock:hover {
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 20px 48px -6px rgba(45, 35, 20, 0.22), 0 0 0 1px rgba(201, 151, 56, 0.5);
+  box-shadow: 0 20px 48px -6px rgba(25, 20, 15, 0.25), 0 0 0 1.5px var(--studio-brand);
   transform: translateX(-50%) translateY(-2px);
 }
 
@@ -284,25 +456,24 @@
 }
 
 .dock-btn-primary {
-  background: #7B113A;
-  color: #FFFFFF;
-  box-shadow: 0 3px 10px rgba(123, 17, 58, 0.25);
+  background: var(--studio-dock-primary-bg);
+  color: var(--studio-dock-primary-text);
+  box-shadow: 0 3px 10px var(--studio-dock-primary-shadow);
 }
 .dock-btn-primary:hover {
-  background: #640C2E;
-  box-shadow: 0 5px 14px rgba(123, 17, 58, 0.35);
+  background: var(--studio-dock-primary-hover);
   transform: scale(1.03);
 }
 
 .dock-btn-ghost {
-  background: rgba(245, 240, 232, 0.7);
-  color: #4A443D;
-  border: 1px solid rgba(220, 210, 195, 0.7);
+  background: var(--studio-dock-ghost-bg);
+  color: var(--studio-dock-ghost-text);
+  border: 1px solid var(--studio-dock-ghost-border);
 }
 .dock-btn-ghost:hover {
-  background: #FFFFFF;
-  color: #1F1B16;
-  border-color: #CFC5B8;
+  background: var(--studio-dock-ghost-hover);
+  color: var(--studio-brand);
+  border-color: var(--studio-brand);
   transform: scale(1.03);
 }
 
@@ -323,7 +494,7 @@
 .dock-divider {
   width: 1px;
   height: 22px;
-  background: rgba(220, 210, 195, 0.7);
+  background: var(--studio-dock-divider);
   margin: 0 2px;
 }
 
@@ -365,16 +536,16 @@
   bottom: 0;
   width: 530px;
   max-width: 92vw;
-  background: rgba(255, 255, 255, 0.96);
+  background: var(--studio-drawer-bg);
   backdrop-filter: blur(28px) saturate(180%);
   -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border-right: 1px solid rgba(220, 210, 195, 0.8);
-  box-shadow: 20px 0 60px rgba(45, 35, 20, 0.16);
+  border-right: 1px solid var(--studio-drawer-border);
+  box-shadow: 20px 0 60px rgba(25, 20, 15, 0.2);
   z-index: 100;
   display: flex;
   flex-direction: column;
   transform: translateX(-100%);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.35s ease, border-color 0.35s ease;
 }
 
 .studio-drawer.open {
@@ -384,7 +555,7 @@
 .drawer-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(25, 20, 15, 0.32);
+  background: rgba(18, 15, 12, 0.45);
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
   z-index: 95;
@@ -401,11 +572,12 @@
 /* Drawer Header */
 .drawer-header {
   padding: 18px 24px 14px 24px;
-  border-bottom: 1px solid #EAE3D9;
+  border-bottom: 1px solid var(--studio-drawer-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #FAF8F5;
+  background: var(--studio-drawer-header-bg);
+  transition: background 0.35s ease, border-color 0.35s ease;
 }
 
 .drawer-title-wrap {
@@ -418,8 +590,9 @@
   font-family: var(--font-royal);
   font-size: 1.15rem;
   font-weight: 700;
-  color: #7B113A;
+  color: var(--studio-drawer-title);
   margin: 0;
+  transition: color 0.35s ease;
 }
 
 .drawer-subtitle {
@@ -431,9 +604,9 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  border: 1px solid #DFD8CE;
-  background: #FFFFFF;
-  color: #5C554D;
+  border: 1px solid var(--studio-topbar-btn-border);
+  background: var(--studio-topbar-btn-bg);
+  color: var(--studio-topbar-btn-text);
   font-size: 1.2rem;
   cursor: pointer;
   display: flex;
@@ -443,9 +616,8 @@
   line-height: 1;
 }
 .drawer-close-btn:hover {
-  background: #F5EFE6;
-  color: #1F1B16;
-  border-color: #CFC5B8;
+  background: var(--studio-topbar-btn-hover-bg);
+  color: var(--studio-brand);
   transform: scale(1.05);
 }
 
@@ -455,9 +627,10 @@
   overflow-x: auto;
   padding: 10px 16px;
   gap: 6px;
-  background: #FFFFFF;
-  border-bottom: 1px solid #EAE3D9;
+  background: var(--studio-drawer-header-bg);
+  border-bottom: 1px solid var(--studio-drawer-border);
   scrollbar-width: none;
+  transition: background 0.35s ease, border-color 0.35s ease;
 }
 .drawer-nav-tabs::-webkit-scrollbar {
   display: none;
@@ -468,22 +641,68 @@
   font-size: 0.78rem;
   font-weight: 600;
   border-radius: 20px;
-  border: 1px solid #EAE3D9;
-  background: #FAF8F5;
-  color: #6E6357;
+  border: 1px solid var(--studio-drawer-border);
+  background: var(--studio-dock-ghost-bg);
+  color: var(--studio-doc-name);
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
 }
 .drawer-tab-btn:hover {
-  background: #F3ECE1;
-  color: #2D2723;
+  background: var(--studio-topbar-btn-hover-bg);
+  color: var(--studio-brand);
 }
 .drawer-tab-btn.active {
-  background: #7B113A;
+  background: var(--studio-drawer-tab-active-bg);
+  color: var(--studio-drawer-tab-active-text);
+  border-color: var(--studio-drawer-tab-active-bg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Drawer Dark Theme Overrides for Midnight Luxury */
+.ambient-studio-wrapper[data-theme="midnight-luxury"] .studio-drawer {
+  color: #E8E3DA;
+}
+.ambient-studio-wrapper[data-theme="midnight-luxury"] .drawer-subtitle {
+  color: #9C9487;
+}
+.ambient-studio-wrapper[data-theme="midnight-luxury"] .section-pane-title {
+  color: #D4AF37;
+  border-bottom-color: #332C20;
+}
+.ambient-studio-wrapper[data-theme="midnight-luxury"] .form-label {
+  color: #D4AF37;
+}
+.ambient-studio-wrapper[data-theme="midnight-luxury"] .form-input,
+.ambient-studio-wrapper[data-theme="midnight-luxury"] .form-select,
+.ambient-studio-wrapper[data-theme="midnight-luxury"] .form-textarea {
+  background: #141210;
+  border-color: #383024;
   color: #FFFFFF;
-  border-color: #7B113A;
-  box-shadow: 0 2px 6px rgba(123, 17, 58, 0.2);
+}
+.ambient-studio-wrapper[data-theme="midnight-luxury"] .form-input:focus,
+.ambient-studio-wrapper[data-theme="midnight-luxury"] .form-select:focus,
+.ambient-studio-wrapper[data-theme="midnight-luxury"] .form-textarea:focus {
+  border-color: #D4AF37;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+.ambient-studio-wrapper[data-theme="midnight-luxury"] .clean-photo-row {
+  background: #181512;
+  border-color: #332C20;
+}
+.ambient-studio-wrapper[data-theme="midnight-luxury"] .dynamic-item-card {
+  background: #181512;
+  border-color: #332C20;
+  color: #FFFFFF;
+}
+.ambient-studio-wrapper[data-theme="midnight-luxury"] .btn-add-item {
+  background: #181512;
+  border-color: #4A402E;
+  color: #D4AF37;
+}
+.ambient-studio-wrapper[data-theme="midnight-luxury"] .btn-add-item:hover {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: #D4AF37;
 }
 
 /* Drawer Panes Body */

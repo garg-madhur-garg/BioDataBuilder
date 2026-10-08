@@ -13,6 +13,19 @@
       background-color: #F7F3ED;
       min-height: 100vh;
       padding: 40px 16px 80px;
+      transition: background-color 0.35s ease;
+    }
+    body[data-theme="midnight-luxury"] {
+      background-color: #0E0C0A;
+    }
+    body[data-theme="sage-garden"] {
+      background-color: #EEF4EB;
+    }
+    body[data-theme="minimal-ivory"] {
+      background-color: #F3EFE9;
+    }
+    body[data-theme="royal-maroon"] {
+      background-color: #F7F3ED;
     }
 
     .public-container {
@@ -129,7 +142,8 @@
         const candidateName = biodata.personal?.fullName || "Candidate";
         document.title = `${candidateName} — Marriage Biodata`;
 
-        // Render Template
+        // Render Template with Matching Page Theme
+        document.body.dataset.theme = biodata.theme || "royal-maroon";
         container.innerHTML = renderClassicTemplate(biodata, { isPreview: false });
         actionsBar.style.display = "flex";
 
