@@ -32,7 +32,15 @@ export function renderClassicTemplate(data, options = { isPreview: false, editin
   const showWhatsApp = Boolean(c.whatsapp);
   const showEmail = Boolean(c.email);
   const showAddress = Boolean(c.address);
-  const showCurrentAddress = Boolean(c.currentAddress);
+
+  // Address matching logic:
+  // If isCurrentSameAsHome is true (or unset and currentAddress is empty/matches home),
+  // then single unified address is shown. If false, separate options are shown.
+  const isCurrentSame = c.isCurrentSameAsHome !== undefined
+    ? Boolean(c.isCurrentSameAsHome)
+    : (!c.currentAddress || c.currentAddress.trim() === "" || c.currentAddress.trim() === (c.address || "").trim());
+
+  const showCurrentAddress = !isCurrentSame && Boolean(c.currentAddress);
 
   // Helper for computing Google Map location URL
   const getMapLink = (address, customUrl) => {
@@ -825,10 +833,48 @@ export function renderClassicTemplate(data, options = { isPreview: false, editin
             ${renderFieldEditRow("Phone", "contact.phone", c.phone)}
             ${renderFieldEditRow("WhatsApp", "contact.whatsapp", c.whatsapp)}
             ${renderFieldEditRow("Email", "contact.email", c.email)}
-            ${renderFieldEditRow("Home Address", "contact.address", c.address, "Permanent / Family residence address")}
-            ${renderFieldEditRow("Home Map Link", "contact.homeMapUrl", c.homeMapUrl, "Google Maps URL (optional, auto-links if blank)")}
-            ${renderFieldEditRow("Current Address", "contact.currentAddress", c.currentAddress, "Current city / flat / residence")}
-            ${renderFieldEditRow("Current Map Link", "contact.currentMapUrl", c.currentMapUrl, "Google Maps URL (optional, auto-links if blank)")}
+
+            <!-- Address Option: Same vs Different -->
+            <div class="address-mode-selector-box">
+              <div class="address-mode-heading">Residential Address Setup:</div>
+              <div class="address-mode-options">
+                <label class="address-mode-btn ${isCurrentSame ? "active" : ""}">
+                  <input type="radio" name="contactAddressMode" class="address-mode-radio" value="same" ${isCurrentSame ? "checked" : ""}>
+                  <span>🏠 Current address is same as Home</span>
+                </label>
+                <label class="address-mode-btn ${!isCurrentSame ? "active" : ""}">
+                  <input type="radio" name="contactAddressMode" class="address-mode-radio" value="different" ${!isCurrentSame ? "checked" : ""}>
+                  <span>🏢 Current address is different</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Home Address Group -->
+            <div class="address-group-box">
+              <div class="address-group-title">${isCurrentSame ? "Residence Address" : "1. Home Address / Family Residence"}</div>
+              ${renderFieldEditRow(isCurrentSame ? "Residence Address" : "Home Address", "contact.address", c.address, "Permanent / Family residence address")}
+              <div class="inline-map-row">
+                ${renderFieldEditRow("Google Map Link", "contact.homeMapUrl", c.homeMapUrl, "Google Maps URL (optional, auto-links if blank)")}
+                <button type="button" class="btn-preview-map-search" data-field-target="contact.address" title="Search address on Google Maps in new tab">
+                  🗺️ Find on Map
+                </button>
+              </div>
+            </div>
+
+            ${!isCurrentSame ? `
+            <!-- Current Address Group (Only shown when different) -->
+            <div class="address-group-box">
+              <div class="address-group-title">2. Current / Present Address</div>
+              ${renderFieldEditRow("Current Address", "contact.currentAddress", c.currentAddress, "Current city / flat / residence")}
+              <div class="inline-map-row">
+                ${renderFieldEditRow("Current Map Link", "contact.currentMapUrl", c.currentMapUrl, "Google Maps URL (optional, auto-links if blank)")}
+                <button type="button" class="btn-preview-map-search" data-field-target="contact.currentAddress" title="Search current address on Google Maps in new tab">
+                  🗺️ Find on Map
+                </button>
+              </div>
+            </div>
+            ` : ""}
+
             ${renderCustomFieldsEdit("contact")}
           </div>
           <button type="button" class="btn-add-section-extra-field" data-section="contact">+ Add Extra Field</button>
@@ -879,9 +925,9 @@ export function renderClassicTemplate(data, options = { isPreview: false, editin
                 <span class="t-c-icon">🏡</span>
                 <div class="t-address-content">
                   <div class="t-address-header">
-                    <div class="t-c-label">Home Address / Family Residence</div>
+                    <div class="t-c-label">${isCurrentSame ? "Residence Address" : "Home Address / Family Residence"}</div>
                     ${getMapLink(c.address, c.homeMapUrl) ? `
-                      <a href="${getMapLink(c.address, c.homeMapUrl)}" target="_blank" rel="noopener noreferrer" class="t-map-link-badge" title="Open home address on Google Maps">
+                      <a href="${getMapLink(c.address, c.homeMapUrl)}" target="_blank" rel="noopener noreferrer" class="t-map-link-badge" title="Open location in Google Maps">
                         <span class="t-map-pin">📍</span> Google Map
                       </a>
                     ` : ""}
@@ -893,12 +939,12 @@ export function renderClassicTemplate(data, options = { isPreview: false, editin
 
             ${showCurrentAddress && !isFieldHidden("contact.currentAddress") ? `
               <div class="t-contact-box t-address-contact-box" style="grid-column: 1 / -1;">
-                <span class="t-c-icon">🏙️</span>
+                <span class="t-c-icon">🏢</span>
                 <div class="t-address-content">
                   <div class="t-address-header">
-                    <div class="t-c-label">Current Address</div>
+                    <div class="t-c-label">Current / Present Address</div>
                     ${getMapLink(c.currentAddress, c.currentMapUrl) ? `
-                      <a href="${getMapLink(c.currentAddress, c.currentMapUrl)}" target="_blank" rel="noopener noreferrer" class="t-map-link-badge" title="Open current address on Google Maps">
+                      <a href="${getMapLink(c.currentAddress, c.currentMapUrl)}" target="_blank" rel="noopener noreferrer" class="t-map-link-badge" title="Open current location in Google Maps">
                         <span class="t-map-pin">📍</span> Google Map
                       </a>
                     ` : ""}

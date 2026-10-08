@@ -35,9 +35,10 @@ export const sampleBiodata = {
     address: "Rohini, New Delhi - 110085",
     addressPublic: false,
     homeMapUrl: "https://maps.google.com/?q=Rohini,+New+Delhi,+Delhi+110085",
-    currentAddress: "Sector 62, Noida, Uttar Pradesh - 201309",
+    isCurrentSameAsHome: true,
+    currentAddress: "",
     currentAddressPublic: false,
-    currentMapUrl: "https://maps.google.com/?q=Sector+62,+Noida,+Uttar+Pradesh+201309",
+    currentMapUrl: "",
     contactPerson: "Shri Suresh Sharma",
     contactPersonRelation: "Father"
   },

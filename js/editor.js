@@ -206,6 +206,19 @@ async function initEditor() {
     if (input) input.value = val;
   }
 
+  function syncDrawerAddressMode(isSame) {
+    const wrap = document.getElementById("drawer-current-addr-wrap");
+    const sameRadio = document.getElementById("drawer-addr-same");
+    const diffRadio = document.getElementById("drawer-addr-diff");
+    if (sameRadio && diffRadio) {
+      sameRadio.checked = isSame;
+      diffRadio.checked = !isSame;
+    }
+    if (wrap) {
+      wrap.style.display = isSame ? "none" : "block";
+    }
+  }
+
   // In-Place Living Canvas Event Attachments
   function attachCanvasInteractions() {
     if (!livePreviewCanvas) return;
@@ -416,6 +429,38 @@ async function initEditor() {
         syncToDrawerInput("auspiciousMotto", motto);
         updateLivePreview();
         queueAutoSave();
+      });
+    });
+
+    // 10c. Address Mode Toggle (Same as Home vs Separate Current)
+    livePreviewCanvas.querySelectorAll(".address-mode-radio").forEach((radio) => {
+      radio.addEventListener("change", (e) => {
+        if (!biodata.contact) biodata.contact = {};
+        biodata.contact.isCurrentSameAsHome = (e.target.value === "same");
+        syncDrawerAddressMode(biodata.contact.isCurrentSameAsHome);
+        updateLivePreview();
+        queueAutoSave();
+      });
+    });
+
+    // 10d. Test / Search on Google Maps
+    livePreviewCanvas.querySelectorAll(".btn-preview-map-search").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const target = btn.dataset.fieldTarget;
+        const c = biodata.contact || {};
+        const isCurrent = target === "contact.currentAddress";
+        const customUrl = isCurrent ? c.currentMapUrl : c.homeMapUrl;
+        const addrText = isCurrent ? c.currentAddress : c.address;
+
+        if (customUrl && customUrl.trim()) {
+          window.open(customUrl.trim(), "_blank");
+        } else if (addrText && addrText.trim()) {
+          window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addrText.trim())}`, "_blank");
+        } else {
+          showToast("Please enter an address first to find it on Google Maps.", "info");
+        }
       });
     });
 
@@ -736,6 +781,11 @@ async function initEditor() {
     bindCheck("check-currentAddressPublic", c.currentAddressPublic === true);
     bindVal("field-currentMapUrl", c.currentMapUrl);
 
+    const isSameAddr = c.isCurrentSameAsHome !== undefined
+      ? Boolean(c.isCurrentSameAsHome)
+      : (!c.currentAddress || c.currentAddress.trim() === "" || c.currentAddress.trim() === (c.address || "").trim());
+    syncDrawerAddressMode(isSameAddr);
+
     // Career
     bindVal("field-profession", car.profession);
     bindVal("field-designation", car.designation);
@@ -976,6 +1026,17 @@ async function initEditor() {
     if (e.key === "Escape" && studioDrawer && studioDrawer.classList.contains("open")) {
       closeDrawer();
     }
+  });
+
+  // Drawer Address Mode Radio
+  document.querySelectorAll("input[name='drawerAddressMode']").forEach((radio) => {
+    radio.addEventListener("change", (e) => {
+      if (!biodata.contact) biodata.contact = {};
+      biodata.contact.isCurrentSameAsHome = (e.target.value === "same");
+      syncDrawerAddressMode(biodata.contact.isCurrentSameAsHome);
+      updateLivePreview();
+      queueAutoSave();
+    });
   });
 
   // Drawer Tabs

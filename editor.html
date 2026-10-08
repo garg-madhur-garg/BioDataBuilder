@@ -489,19 +489,35 @@
             <label class="form-label" for="field-homeMapUrl">Home Google Maps Location Link</label>
             <input type="url" id="field-homeMapUrl" class="form-input" placeholder="https://maps.google.com/?q=... (Optional, auto-links if blank)">
           </div>
-          <div class="form-group">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-              <label class="form-label" for="field-currentAddress" style="margin: 0;">Current / Present Address</label>
-              <label class="privacy-toggle">
-                <input type="checkbox" id="check-currentAddressPublic">
-                <span>Show on Biodata</span>
+          <div class="form-group" style="margin-top: 10px;">
+            <label class="form-label">Current Address Option</label>
+            <div style="display: flex; gap: 14px; margin-top: 4px;">
+              <label style="font-size: 0.82rem; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="drawerAddressMode" id="drawer-addr-same" value="same" checked>
+                <span>Same as Home Address</span>
+              </label>
+              <label style="font-size: 0.82rem; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="drawerAddressMode" id="drawer-addr-diff" value="different">
+                <span>Separate Current Address</span>
               </label>
             </div>
-            <textarea id="field-currentAddress" class="form-textarea" placeholder="Current living address / apartment / city (Optional)"></textarea>
           </div>
-          <div class="form-group">
-            <label class="form-label" for="field-currentMapUrl">Current Address Google Maps Location Link</label>
-            <input type="url" id="field-currentMapUrl" class="form-input" placeholder="https://maps.google.com/?q=... (Optional, auto-links if blank)">
+
+          <div id="drawer-current-addr-wrap" style="display: none;">
+            <div class="form-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                <label class="form-label" for="field-currentAddress" style="margin: 0;">Current / Present Address</label>
+                <label class="privacy-toggle">
+                  <input type="checkbox" id="check-currentAddressPublic">
+                  <span>Show on Biodata</span>
+                </label>
+              </div>
+              <textarea id="field-currentAddress" class="form-textarea" placeholder="Current living address / apartment / city (Optional)"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-currentMapUrl">Current Address Google Maps Location Link</label>
+              <input type="url" id="field-currentMapUrl" class="form-input" placeholder="https://maps.google.com/?q=... (Optional, auto-links if blank)">
+            </div>
           </div>
         </div>
 
