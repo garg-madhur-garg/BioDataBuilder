@@ -42,10 +42,14 @@ export function renderClassicTemplate(data, options = { isPreview: false, editin
 
   const showCurrentAddress = !isCurrentSame && Boolean(c.currentAddress);
 
-  // Helper for computing Google Map location URL
+  // Helper for computing Google Map location URL with HTTPS guarantee
   const getMapLink = (address, customUrl) => {
     if (customUrl && typeof customUrl === "string" && customUrl.trim()) {
-      return customUrl.trim();
+      let u = customUrl.trim();
+      if (!/^https?:\/\//i.test(u)) {
+        u = "https://" + u;
+      }
+      return u;
     }
     if (address && typeof address === "string" && address.trim()) {
       return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address.trim())}`;
@@ -85,13 +89,45 @@ export function renderClassicTemplate(data, options = { isPreview: false, editin
     `).join("");
   };
 
-  // Helper for generating an inline field edit row
-  const renderFieldEditRow = (label, fieldKey, val, placeholder = "") => {
+  // Standard select dropdown options for fields across the biodata
+  const fieldSelectOptions = {
+    "personal.gender": ["Male", "Female", "Other"],
+    "personal.maritalStatus": ["Never Married", "Awaiting Divorce", "Divorced", "Widowed", "Annulled"],
+    "personal.bloodGroup": ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"],
+    "family.familyType": ["Nuclear Family", "Joint Family"],
+    "family.familyValues": ["Moderate", "Traditional", "Liberal"],
+    "lifestyle.diet": ["Vegetarian", "Eggetarian", "Non-Vegetarian", "Jain Vegetarian", "Vegan"],
+    "lifestyle.smoking": ["No", "Occasionally", "Yes"],
+    "lifestyle.drinking": ["No", "Socially", "Occasionally", "Yes"],
+    "horoscope.manglik": ["Non-Manglik", "Manglik", "Anshik Manglik", "Don't Know"],
+    "contact.contactPersonRelation": ["Father", "Mother", "Brother", "Sister", "Self", "Guardian", "Uncle"],
+    "career.occupationType": ["Job / Corporate", "Business / Self-Employed", "Government / PSU", "Professional Practice"]
+  };
+
+  // Helper for generating an inline field edit row (with automatic select dropdown support)
+  const renderFieldEditRow = (label, fieldKey, val, placeholder = "", customOptions = null) => {
     const hidden = isFieldHidden(fieldKey);
+    const selectOptions = customOptions || fieldSelectOptions[fieldKey];
+
+    let inputHtml = "";
+    if (selectOptions && Array.isArray(selectOptions) && selectOptions.length > 0) {
+      const currentValStr = String(val || "").trim();
+      const hasMatch = selectOptions.some(opt => opt.toLowerCase() === currentValStr.toLowerCase());
+      inputHtml = `
+        <select class="inline-field-input inline-field-select" data-field="${fieldKey}">
+          <option value="">-- Select ${label} --</option>
+          ${selectOptions.map(opt => `<option value="${opt}" ${opt.toLowerCase() === currentValStr.toLowerCase() ? "selected" : ""}>${opt}</option>`).join("")}
+          ${currentValStr && !hasMatch ? `<option value="${currentValStr}" selected>${currentValStr} (Custom)</option>` : ""}
+        </select>
+      `;
+    } else {
+      inputHtml = `<input type="text" class="inline-field-input" data-field="${fieldKey}" value="${val || ""}" placeholder="${placeholder || label}">`;
+    }
+
     return `
       <div class="inline-field-edit-row ${hidden ? "is-hidden-field" : ""}">
         <span class="inline-field-label" title="${label}">${label}</span>
-        <input type="text" class="inline-field-input" data-field="${fieldKey}" value="${val || ""}" placeholder="${placeholder || label}">
+        ${inputHtml}
         <button type="button" class="btn-field-hide-toggle" data-field="${fieldKey}" title="${hidden ? "Unhide this field" : "Hide from biodata"}">
           ${hidden ? "🙈" : "👁️"}
         </button>
@@ -415,19 +451,68 @@ export function renderClassicTemplate(data, options = { isPreview: false, editin
               </div>
             ` : ""}
             <div class="inline-edit-fields-list">
-              <h4 class="t-subheading" style="margin-top: 6px;">💼 Professional Career</h4>
-              ${renderFieldEditRow("Profession", "career.profession", car.profession)}
-              ${renderFieldEditRow("Designation", "career.designation", car.designation)}
-              ${renderFieldEditRow("Company", "career.company", car.company)}
-              ${renderFieldEditRow("Location", "career.location", car.location)}
-              ${renderFieldEditRow("Annual Income", "career.annualIncome", car.annualIncome, "e.g. ₹28 - 32 LPA")}
-              ${renderFieldEditRow("Experience", "career.experience", car.experience, "e.g. 5+ Years")}
+              <!-- Career Type Selector -->
+              <div class="career-mode-selector-box">
+                <div class="career-mode-heading">Career / Occupation Category:</div>
+                <div class="career-mode-options">
+                  <label class="career-mode-btn ${(!car.occupationType || car.occupationType === "Job") ? "active" : ""}">
+                    <input type="radio" name="careerTypeRadio" class="career-type-radio" value="Job" ${(!car.occupationType || car.occupationType === "Job") ? "checked" : ""}>
+                    <span>💼 Job / Service</span>
+                  </label>
+                  <label class="career-mode-btn ${car.occupationType === "Business" ? "active" : ""}">
+                    <input type="radio" name="careerTypeRadio" class="career-type-radio" value="Business" ${car.occupationType === "Business" ? "checked" : ""}>
+                    <span>🏢 Business / Entrepreneur</span>
+                  </label>
+                  <label class="career-mode-btn ${car.occupationType === "Government" ? "active" : ""}">
+                    <input type="radio" name="careerTypeRadio" class="career-type-radio" value="Government" ${car.occupationType === "Government" ? "checked" : ""}>
+                    <span>🏛️ Govt / PSU Officer</span>
+                  </label>
+                  <label class="career-mode-btn ${car.occupationType === "Professional" ? "active" : ""}">
+                    <input type="radio" name="careerTypeRadio" class="career-type-radio" value="Professional" ${car.occupationType === "Professional" ? "checked" : ""}>
+                    <span>⚖️ Professional (CA/Dr/Law)</span>
+                  </label>
+                </div>
+              </div>
+
+              ${car.occupationType === "Business" ? `
+                <h4 class="t-subheading" style="margin-top: 8px;">🏢 Business & Entrepreneurship Details</h4>
+                ${renderFieldEditRow("Business Name", "career.company", car.company, "e.g. Garg Textiles & Exports / Retail Store")}
+                ${renderFieldEditRow("Nature / Industry", "career.profession", car.profession, "e.g. Textile Manufacturing, Trading, IT Agency, Real Estate")}
+                ${renderFieldEditRow("Role / Status", "career.designation", car.designation, "e.g. Owner / Partner / Director", ["Owner / Proprietor", "Founder & CEO", "Managing Director", "Partner", "Director", "Promoter"])}
+                ${renderFieldEditRow("Business City", "career.location", car.location, "e.g. Surat & Delhi / Pan India")}
+                ${renderFieldEditRow("Turnover / Income", "career.annualIncome", car.annualIncome, "e.g. Turnover ₹2.5 Cr+ (Personal ₹30 LPA)")}
+                ${renderFieldEditRow("Business Age", "career.experience", car.experience, "e.g. Established 8+ Years / 2nd Generation")}
+              ` : car.occupationType === "Government" ? `
+                <h4 class="t-subheading" style="margin-top: 8px;">🏛️ Government / PSU Service Details</h4>
+                ${renderFieldEditRow("Designation / Rank", "career.designation", car.designation, "e.g. Assistant Commissioner / Officer")}
+                ${renderFieldEditRow("Department / Ministry", "career.company", car.company, "e.g. Ministry of Finance / Indian Railways / SBI")}
+                ${renderFieldEditRow("Service Cadre", "career.profession", car.profession, "e.g. Civil Services / Class-I Gazetted / Bank PO")}
+                ${renderFieldEditRow("Posting Location", "career.location", car.location, "e.g. New Delhi / Open to Transfers")}
+                ${renderFieldEditRow("Pay Scale / Income", "career.annualIncome", car.annualIncome, "e.g. 7th CPC Level 10 / ₹18 LPA")}
+                ${renderFieldEditRow("Service Years", "career.experience", car.experience, "e.g. 6+ Years in Service")}
+              ` : car.occupationType === "Professional" ? `
+                <h4 class="t-subheading" style="margin-top: 8px;">⚖️ Professional Practice Details</h4>
+                ${renderFieldEditRow("Profession", "career.profession", car.profession, "e.g. Chartered Accountant / Doctor / Advocate")}
+                ${renderFieldEditRow("Firm / Clinic Name", "career.company", car.company, "e.g. Garg & Associates (CA Firm) / Private Clinic")}
+                ${renderFieldEditRow("Specialization", "career.designation", car.designation, "e.g. Corporate Taxation / MD Physician / Civil Law")}
+                ${renderFieldEditRow("Practice City", "career.location", car.location, "e.g. Jaipur & Delhi")}
+                ${renderFieldEditRow("Annual Income", "career.annualIncome", car.annualIncome, "e.g. ₹25 - 30 LPA")}
+                ${renderFieldEditRow("Practice Experience", "career.experience", car.experience, "e.g. 7+ Years Practice")}
+              ` : `
+                <h4 class="t-subheading" style="margin-top: 8px;">💼 Professional Corporate Career</h4>
+                ${renderFieldEditRow("Profession", "career.profession", car.profession, "e.g. Software Engineer / Financial Analyst")}
+                ${renderFieldEditRow("Designation", "career.designation", car.designation, "e.g. Senior Software Engineer / Manager")}
+                ${renderFieldEditRow("Company", "career.company", car.company, "e.g. Microsoft India / Google")}
+                ${renderFieldEditRow("Work Location", "career.location", car.location, "e.g. Noida / Gurugram (Hybrid)")}
+                ${renderFieldEditRow("Annual Package", "career.annualIncome", car.annualIncome, "e.g. ₹28 - 32 LPA")}
+                ${renderFieldEditRow("Experience", "career.experience", car.experience, "e.g. 5+ Years")}
+              `}
 
               <h4 class="t-subheading" style="margin-top: 14px;">🎓 Highest Education</h4>
-              ${renderFieldEditRow("Primary Degree", "education.0.degree", edus[0]?.degree, "e.g. B.Tech in CS")}
-              ${renderFieldEditRow("Institution", "education.0.institution", edus[0]?.institution, "e.g. DTU / IIT")}
+              ${renderFieldEditRow("Primary Degree", "education.0.degree", edus[0]?.degree, "e.g. B.Tech / MBA / B.Com / CA")}
+              ${renderFieldEditRow("Institution", "education.0.institution", edus[0]?.institution, "e.g. DTU / IIT / DU / ICAI")}
               ${renderFieldEditRow("Passing Year", "education.0.year", edus[0]?.year, "e.g. 2019")}
-              ${renderFieldEditRow("Grade / Note", "education.0.description", edus[0]?.description, "e.g. First Class")}
+              ${renderFieldEditRow("Grade / Note", "education.0.description", edus[0]?.description, "e.g. First Class Honours")}
 
               ${renderCustomFieldsEdit("career")}
             </div>
@@ -464,6 +549,11 @@ export function renderClassicTemplate(data, options = { isPreview: false, editin
             })()}
 
             ${(() => {
+              const occType = car.occupationType || "Job";
+              const isBusiness = occType === "Business";
+              const isGovt = occType === "Government";
+              const isProf = occType === "Professional";
+
               const showDesig = (car.designation || car.profession) && !isFieldHidden("career.designation");
               const showComp = car.company && !isFieldHidden("career.company");
               const showLoc = car.location && !isFieldHidden("career.location");
@@ -472,19 +562,26 @@ export function renderClassicTemplate(data, options = { isPreview: false, editin
               
               if (!showDesig && !showComp && !showLoc && !showExp && !showInc) return "";
               
+              const sectionHeader = isBusiness ? "🏢 Business & Entrepreneurship" : (isGovt ? "🏛️ Government Service" : (isProf ? "⚖️ Professional Practice" : "💼 Professional Career"));
+              const titleDisplay = isBusiness 
+                ? (car.designation && car.company ? `${car.designation} • ${car.company}` : (car.company || car.designation || car.profession))
+                : (car.designation || car.profession);
+              
+              const subDisplay = isBusiness
+                ? (car.profession ? `Industry: ${car.profession}${car.location ? ` • ${car.location}` : ""}` : (car.location || ""))
+                : (showComp ? `${car.company}${car.location ? ` • ${car.location}` : ""}` : (car.location || ""));
+
+              const badgeLabel = isBusiness ? `Turnover / Income: ${car.annualIncome}` : `Annual Package: ${car.annualIncome}`;
+              const expLabel = isBusiness ? "Business Standing" : (isProf ? "Practice" : "Experience");
+
               return `
                 <div class="t-subblock" style="margin-top: 16px;">
-                  <h4 class="t-subheading">💼 Professional Career</h4>
+                  <h4 class="t-subheading">${sectionHeader}</h4>
                   <div class="t-list-item">
-                    ${showDesig ? `<div class="t-item-title">${car.designation || car.profession}</div>` : ""}
-                    ${showComp || showLoc ? `
-                      <div class="t-item-sub">
-                        ${showComp ? `<strong>${car.company}</strong>` : ""}
-                        ${showLoc ? `${showComp ? " • " : ""}${car.location}` : ""}
-                      </div>
-                    ` : ""}
-                    ${showExp ? `<div class="t-item-desc">Experience: ${car.experience}</div>` : ""}
-                    ${showInc ? `<div class="t-item-badge">💰 Annual Package: ${car.annualIncome}</div>` : ""}
+                    ${titleDisplay ? `<div class="t-item-title">${titleDisplay}</div>` : ""}
+                    ${subDisplay ? `<div class="t-item-sub">${subDisplay}</div>` : ""}
+                    ${showExp ? `<div class="t-item-desc">${expLabel}: ${car.experience}</div>` : ""}
+                    ${showInc ? `<div class="t-item-badge">💰 ${badgeLabel}</div>` : ""}
                   </div>
                 </div>
               `;

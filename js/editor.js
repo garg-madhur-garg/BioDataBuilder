@@ -327,7 +327,7 @@ async function initEditor() {
 
     // 9. Standard & Custom Field Value Inputs
     livePreviewCanvas.querySelectorAll(".inline-field-input").forEach((inp) => {
-      inp.addEventListener("input", (e) => {
+      const handleInputOrChange = (e) => {
         const field = e.target.dataset.field;
         const customId = e.target.dataset.customId;
         const secKey = e.target.dataset.section;
@@ -351,7 +351,9 @@ async function initEditor() {
           }
           queueAutoSave();
         }
-      });
+      };
+      inp.addEventListener("input", handleInputOrChange);
+      inp.addEventListener("change", handleInputOrChange);
     });
 
     // 10. Delete Custom Extra Field
@@ -451,16 +453,56 @@ async function initEditor() {
         const target = btn.dataset.fieldTarget;
         const c = biodata.contact || {};
         const isCurrent = target === "contact.currentAddress";
-        const customUrl = isCurrent ? c.currentMapUrl : c.homeMapUrl;
-        const addrText = isCurrent ? c.currentAddress : c.address;
 
-        if (customUrl && customUrl.trim()) {
-          window.open(customUrl.trim(), "_blank");
-        } else if (addrText && addrText.trim()) {
-          window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addrText.trim())}`, "_blank");
-        } else {
-          showToast("Please enter an address first to find it on Google Maps.", "info");
+        // Read directly from adjacent input in DOM first
+        const mapRow = btn.closest(".inline-map-row");
+        const mapInp = mapRow ? mapRow.querySelector(".inline-field-input") : null;
+        let customUrl = (mapInp && mapInp.value) ? mapInp.value.trim() : (isCurrent ? (c.currentMapUrl || "") : (c.homeMapUrl || ""));
+        const addrText = isCurrent ? (c.currentAddress || "") : (c.address || "");
+
+        let finalUrl = "";
+        if (customUrl && typeof customUrl === "string" && customUrl.trim()) {
+          let u = customUrl.trim();
+          if (!/^https?:\/\//i.test(u)) {
+            u = "https://" + u;
+          }
+          finalUrl = u;
+        } else if (addrText && typeof addrText === "string" && addrText.trim()) {
+          finalUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addrText.trim())}`;
         }
+
+        if (finalUrl) {
+          window.open(finalUrl, "_blank", "noopener,noreferrer");
+        } else {
+          showToast("Please enter an address or map link first.", "info");
+        }
+      });
+    });
+
+    // 10e. Google Map Badge Direct Click Listener (Guarantees HTTPS new-tab opening)
+    livePreviewCanvas.querySelectorAll(".t-map-link-badge").forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.stopPropagation();
+        let href = link.getAttribute("href");
+        if (href && href !== "#") {
+          if (!/^https?:\/\//i.test(href)) {
+            href = "https://" + href;
+          }
+          window.open(href, "_blank", "noopener,noreferrer");
+          e.preventDefault();
+        }
+      });
+    });
+
+    // 10f. Career / Occupation Category Radio Toggle on Paper
+    livePreviewCanvas.querySelectorAll(".career-type-radio").forEach((radio) => {
+      radio.addEventListener("change", (e) => {
+        if (!biodata.career) biodata.career = {};
+        biodata.career.occupationType = e.target.value;
+        const drawerOcc = document.getElementById("field-occupationType");
+        if (drawerOcc) drawerOcc.value = e.target.value;
+        updateLivePreview();
+        queueAutoSave();
       });
     });
 
@@ -787,6 +829,7 @@ async function initEditor() {
     syncDrawerAddressMode(isSameAddr);
 
     // Career
+    bindVal("field-occupationType", car.occupationType || "Job");
     bindVal("field-profession", car.profession);
     bindVal("field-designation", car.designation);
     bindVal("field-company", car.company);
@@ -915,6 +958,10 @@ async function initEditor() {
       case "check-currentAddressPublic": biodata.contact.currentAddressPublic = checked; break;
       case "field-currentMapUrl": biodata.contact.currentMapUrl = val; break;
 
+      case "field-occupationType":
+        biodata.career.occupationType = val;
+        updateLivePreview();
+        break;
       case "field-profession": biodata.career.profession = val; break;
       case "field-designation": biodata.career.designation = val; break;
       case "field-company": biodata.career.company = val; break;

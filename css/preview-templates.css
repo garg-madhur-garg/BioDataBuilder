@@ -728,6 +728,16 @@
   border-color: #D4AF37 !important;
   box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.25) !important;
 }
+.template-classic.theme-midnight-luxury select.inline-field-select {
+  background-color: #141210 !important;
+  border-color: #4A402E !important;
+  color: #FFFFFF !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23D4AF37' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+}
+.template-classic.theme-midnight-luxury select.inline-field-select option {
+  background-color: #1A1713 !important;
+  color: #FFFFFF !important;
+}
 .template-classic.theme-midnight-luxury .inline-custom-label-input {
   background: #141210 !important;
   border-color: #4A402E !important;
@@ -2396,6 +2406,18 @@ strong.living-editable:focus {
   border-color: #C99738;
   box-shadow: 0 0 0 2px rgba(201, 151, 56, 0.15);
 }
+select.inline-field-input,
+.inline-field-select {
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236E6357' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 11px 11px;
+  padding-right: 28px;
+}
 
 /* Custom extra field label input — styled identical to inline-field-label */
 .inline-custom-label-input {
@@ -2646,4 +2668,94 @@ strong.living-editable:focus {
   margin-bottom: 16px;
   font-size: 0.82rem;
   color: #78716C;
+}
+
+/* Career / Occupation Category Selector on Paper */
+.career-mode-selector-box {
+  background: rgba(201, 151, 56, 0.08);
+  border: 1px solid rgba(201, 151, 56, 0.25);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+
+.career-mode-heading {
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #6E6357;
+  margin-bottom: 8px;
+}
+
+.career-mode-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.career-mode-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #5C4E3D;
+  background: #FFFFFF;
+  border: 1px solid #D6CBC0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.career-mode-btn input[type="radio"] {
+  accent-color: #7B113A;
+  margin: 0;
+  cursor: pointer;
+}
+
+.career-mode-btn:hover {
+  border-color: #C99738;
+  background: #FFFDF9;
+}
+
+.career-mode-btn.active {
+  background: #7B113A;
+  border-color: #7B113A;
+  color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(123, 17, 58, 0.2);
+}
+
+.career-mode-btn.active input[type="radio"] {
+  accent-color: #FFFFFF;
+}
+
+/* Midnight Luxury theme adjustments for Career selector */
+.template-classic.theme-midnight-luxury .career-mode-selector-box {
+  background: rgba(212, 175, 55, 0.08);
+  border-color: rgba(212, 175, 55, 0.25);
+}
+
+.template-classic.theme-midnight-luxury .career-mode-heading {
+  color: #D4AF37;
+}
+
+.template-classic.theme-midnight-luxury .career-mode-btn {
+  background: #221E1A;
+  border-color: #4A402E;
+  color: #E8E3DA;
+}
+
+.template-classic.theme-midnight-luxury .career-mode-btn:hover {
+  border-color: #D4AF37;
+  background: #2B2621;
+}
+
+.template-classic.theme-midnight-luxury .career-mode-btn.active {
+  background: #D4AF37;
+  border-color: #D4AF37;
+  color: #141210;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
 }

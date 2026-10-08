@@ -59,6 +59,7 @@ export const sampleBiodata = {
   ],
 
   career: {
+    occupationType: "Job",
     profession: "Software Engineer",
     company: "Microsoft India",
     designation: "Senior Software Engineer",
